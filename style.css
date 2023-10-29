@@ -1,0 +1,27 @@
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #e6ccb2;
+}
+
+header h1 {
+    margin: 30px;
+    color: #7f5539;
+}
+
+main {
+    display: flex;
+}
+
+side {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 30px;
+    font-weight: 500;
+
+    color: #7f5539;
+}
