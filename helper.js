@@ -5,7 +5,7 @@ for (let row = 0; row < 15; row++) {
 
     for (let col = 0; col < 15; col++) {
         tileCode += `
-        <transform translation='${col} 0 ${-row}'>
+        <transform translation='${col} 0 ${row}'>
         <shape>
             <appearance>
                 <material id="tile-${row}-${col}" diffuseColor='0.8 0.8 0.8'></material>
