@@ -4,6 +4,7 @@
     <title>Ludo 3D</title>
     <script type='text/javascript' src='./index.js' defer> </script>
     <script type='text/javascript' src='https://www.x3dom.org/download/x3dom.js' defer> </script>
+    <script type='text/javascript' src='./game.js' defer> </script>
     <link rel='stylesheet' type='text/css' href='https://www.x3dom.org/download/x3dom.css'>
     <link rel='stylesheet' type='text/css' href='./style.css'>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -178,7 +179,9 @@
         </x3d>
 
         <side>
-            Hello! Let the games begin.
+            <div id="info">Hello! Let the games begin.</div>
+            <div id="current-player">Now playing: Blue</div>
+            <button id="roll-button">Roll the dice</button>
         </side>
     </main>
 
