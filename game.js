@@ -21,6 +21,29 @@ class Game {
         const rolledValue = value ?? Math.floor(Math.random() * 6) + 1;
         infoDiv.innerText = `Rolled: ${rolledValue}`;
         this.lastRolledValue = rolledValue;
+
+        if (!this.checkPossibleMoves()) {
+            this.nextPlayer();
+        }
+    }
+
+    checkPossibleMoves() {
+        this.clearPossibleMoves();
+        let isAnyPossible = false;
+
+        for (let i = 0; i < 4; i++) {
+            const player = players[this.currentPlayer];
+            const position = this.tokenPositons[player][i];
+            const newPosition = position + this.lastRolledValue;
+
+            if (newPosition >= 0 && newPosition < playerPaths[player].length) {
+                isAnyPossible = true;
+
+                tokens[player][i].querySelector('material').setAttribute('emissiveColor', '0.5 0.5 0.5');
+            }
+        }
+
+        return isAnyPossible;
     }
 
     nextPlayer() {
@@ -45,12 +68,21 @@ class Game {
         }
 
         this.resetRolledValue();
+        this.clearPossibleMoves();
         return true;
     }
 
     resetRolledValue() {
         this.lastRolledValue = 0;
         infoDiv.innerText = `Roll the dice!`;
+    }
+
+    clearPossibleMoves() {
+        for (let player of players) {
+            for (let i = 0; i < 4; i++) {
+                tokens[player][i].querySelector('material').setAttribute('emissiveColor', '0 0 0');
+            }
+        }
     }
 }
 
