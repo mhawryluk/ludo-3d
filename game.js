@@ -114,12 +114,12 @@ class Game {
         if (oldTile) this.distributeTokensOnOneTile(oldTile);
         this.distributeTokensOnOneTile(newTile);
 
-        this.resetRolledValue();
-        this.clearPossibleMoves();
-
         if (!this.checkForGameOver(player) && this.lastRolledValue !== 6) {
             this.nextPlayer();
         }
+
+        this.resetRolledValue();
+        this.clearPossibleMoves();
 
         return true;
     }
