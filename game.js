@@ -2,6 +2,7 @@ const infoDiv = document.getElementById('info');
 const currentPlayerDiv = document.getElementById('current-player');
 const rollDiceButton = document.getElementById('roll-button');
 const tokens = {};
+const root = document.querySelector(':root');
 
 class Game {
 
@@ -52,6 +53,9 @@ class Game {
         this.lastRolledValue = 0;
 
         currentPlayerDiv.innerText = `Now playing: ${players[this.currentPlayerIndex]}`;
+
+        root.style.setProperty('--background-color', `var(--${players[this.currentPlayerIndex]}-bg)`);
+        root.style.setProperty('--text-color', `var(--${players[this.currentPlayerIndex]}-text)`);
     }
 
     moveToken(token, player, i) {

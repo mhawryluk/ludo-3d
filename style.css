@@ -1,28 +1,51 @@
+:root {
+    --brown-bg: #e6ccb2;
+    --brown-text: #7f5539;
+
+    --red-bg: #f8d8cd;
+    --red-text: #eb6f6f;
+
+    --yellow-bg: #f3f1e5;
+    --yellow-text: #e7cc43;
+
+    --blue-bg: #e1ecf7;
+    --blue-text: #71a5de;
+
+    --green-bg: #ebfaea;
+    --green-text: #64ad61;
+
+    --background-color: var(--blue-bg);
+    --text-color: var(--blue-text);
+}
+
 * {
     font-family: 'Poppins', sans-serif;
 }
 
 body {
-    background-color: #e6ccb2;
+    background-color: var(--background-color);
+    transition: background-color 1000ms;
 }
 
 header h1 {
     margin: 30px;
-    color: #7f5539;
+    color: var(--text-color);
 }
 
 main {
     display: flex;
+    padding: 40px;
 }
 
 button {
     background-color: rgba(255, 255, 255, 0.4);
-    color: white;
+    color: var(--text-color);
     font-weight: bolder;
     font-size: 30px;
     border: none;
     cursor: pointer;
     padding: 10px;
+    transition: color 1000ms;
 }
 
 side {
@@ -34,5 +57,6 @@ side {
     font-size: 30px;
     font-weight: 500;
     width: 50%;
-    color: #7f5539;
+    color: var(--text-color);
+    transition: color 1000ms;
 }
