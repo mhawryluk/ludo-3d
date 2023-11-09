@@ -1,8 +1,12 @@
 const infoDiv = document.getElementById('info');
 const currentPlayerDiv = document.getElementById('current-player');
 const rollDiceButton = document.getElementById('roll-button');
-const tokens = {};
+const popup = document.querySelector('.popup');
 const root = document.querySelector(':root');
+const side = document.querySelector('side');
+const tokens = {};
+
+let game;
 
 class Game {
 
@@ -15,6 +19,19 @@ class Game {
         this.tokenPositons = {};
         for (let player of players) {
             this.tokenPositons[player] = [-6, -6, -6, -6];
+        }
+
+        for (let player of players) {
+            tokens[player] = [];
+            for (let i = 0; i < 4; i++) {
+                const id = `${player}-token-${i + 1}`;
+                const token = document.getElementById(id);
+                tokens[player].push(token);
+
+                token.querySelector('shape').addEventListener('click', () => {
+                    game.moveToken(token, player, i);
+                })
+            }
         }
     }
 
@@ -152,8 +169,6 @@ class Game {
     }
 }
 
-const game = new Game();
-
 rollDiceButton.addEventListener('click', () => {
     if (game.lastRolledValue == 0) {
         game.rollDice();
@@ -162,18 +177,9 @@ rollDiceButton.addEventListener('click', () => {
     }
 });
 
-setTimeout(() => {
-    for (let player of players) {
-        tokens[player] = [];
-        for (let i = 0; i < 4; i++) {
-            const id = `${player}-token-${i + 1}`;
-            const token = document.getElementById(id);
-            tokens[player].push(token);
-
-            token.querySelector('shape').addEventListener('click', () => {
-                game.moveToken(token, player, i);
-            })
-        }
-    }
-}, 1000);
+document.getElementById('4-players-button').addEventListener('click', () => {
+    game = new Game(numberOfPlayers = 4);
+    popup.style.display = 'none';
+    side.style.opacity = 1;
+});
 
