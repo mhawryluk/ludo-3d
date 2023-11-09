@@ -7,7 +7,7 @@ class Game {
 
     constructor(numberOfPlayers = 4) {
         this.numberOfPlayers = numberOfPlayers;
-        this.currentPlayer = 0;
+        this.currentPlayerIndex = 0;
         this.currentPossibleMoves = [];
         this.lastRolledValue = 0;
 
@@ -32,7 +32,7 @@ class Game {
         let isAnyPossible = false;
 
         for (let i = 0; i < 4; i++) {
-            const player = players[this.currentPlayer];
+            const player = players[this.currentPlayerIndex];
             const position = this.tokenPositons[player][i];
             const newPosition = position + this.lastRolledValue;
 
@@ -47,21 +47,42 @@ class Game {
     }
 
     nextPlayer() {
-        this.currentPlayer++;
-        this.currentPlayer %= this.numberOfPlayers;
+        this.currentPlayerIndex++;
+        this.currentPlayerIndex %= this.numberOfPlayers;
+        this.lastRolledValue = 0;
 
-        currentPlayerDiv.innerText = `Now playing: ${players[this.currentPlayer]}`;
+        currentPlayerDiv.innerText = `Now playing: ${players[this.currentPlayerIndex]}`;
     }
 
     moveToken(token, player, i) {
-        if (player != players[this.currentPlayer] || this.lastRolledValue == 0) return false;
+        if (player != players[this.currentPlayerIndex] || this.lastRolledValue == 0) return false;
 
+        const oldTile = playerPaths[player][this.tokenPositons[player][i]];
         const newPosition = this.tokenPositons[player][i] += this.lastRolledValue;
 
         if (newPosition < 0) return false;
 
         const newTile = playerPaths[player][newPosition];
+
+        for (let otherPlayer of players) {
+            if (otherPlayer === player) continue;
+
+            for (let i = 0; i < 4; i++) {
+                const otherTokenTile = playerPaths[otherPlayer][this.tokenPositons[otherPlayer][i]];
+
+                if (arraysEqual(otherTokenTile, newTile)) {
+                    this.tokenPositons[otherPlayer][i] = -6;
+
+                    const startPosition = this.getFreeStartPosition(otherPlayer);
+                    tokens[otherPlayer][i].setAttribute('translation', `${startPosition[0]} 1 ${startPosition[1]}`);
+                }
+            }
+        }
+
         token.setAttribute('translation', `${newTile[1]} 1 ${newTile[0]}`);
+
+        if (oldTile) this.distributeTokensOnOneTile(oldTile);
+        this.distributeTokensOnOneTile(newTile);
 
         if (this.lastRolledValue !== 6) {
             this.nextPlayer();
@@ -70,6 +91,19 @@ class Game {
         this.resetRolledValue();
         this.clearPossibleMoves();
         return true;
+    }
+
+    getFreeStartPosition(player) {
+        const takenStartPositions = tokens[player].map(token => {
+            const translation = token.getAttribute('translation').split(' ');
+            return [translation[1], translation[0]];
+        });
+
+        for (let position of startPositions[player]) {
+            if (takenStartPositions.findIndex(takenPosition => arraysEqual(takenPosition, position)) === -1) {
+                return position;
+            }
+        }
     }
 
     resetRolledValue() {
@@ -84,12 +118,44 @@ class Game {
             }
         }
     }
+
+    distributeTokensOnOneTile(tile) {
+        const allTokensOnTile = [];
+
+        for (let player of players) {
+            for (let i = 0; i < 4; i++) {
+                const tokenTile = playerPaths[player][this.tokenPositons[player][i]];
+                if (!tokenTile) continue;
+                if (arraysEqual(tokenTile, tile)) allTokensOnTile.push(tokens[player][i]);
+            }
+        }
+
+        const tokenCount = allTokensOnTile.length;
+
+        if (tokenCount < 2) {
+            return;
+        }
+
+        const r = 0.35;
+
+        for (let i = 0; i < tokenCount; i++) {
+            const xOffset = r * Math.cos(Math.PI / 180 * i * (360 / tokenCount));
+            const yOffset = r * Math.sin(Math.PI / 180 * i * (360 / tokenCount));
+
+            allTokensOnTile[i].setAttribute('translation', `${tile[1] + yOffset} 1 ${tile[0] + xOffset}`);
+        }
+
+    }
 }
 
 const game = new Game();
 
 rollDiceButton.addEventListener('click', () => {
-    game.rollDice();
+    if (game.lastRolledValue == 0) {
+        game.rollDice();
+    } else {
+        alert('already rolled, make a move!');
+    }
 });
 
 setTimeout(() => {
