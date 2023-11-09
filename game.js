@@ -114,12 +114,13 @@ class Game {
         if (oldTile) this.distributeTokensOnOneTile(oldTile);
         this.distributeTokensOnOneTile(newTile);
 
-        if (this.lastRolledValue !== 6) {
+        this.resetRolledValue();
+        this.clearPossibleMoves();
+
+        if (!this.checkForGameOver(player) && this.lastRolledValue !== 6) {
             this.nextPlayer();
         }
 
-        this.resetRolledValue();
-        this.clearPossibleMoves();
         return true;
     }
 
@@ -170,13 +171,26 @@ class Game {
             allTokensOnTile[i].setAttribute('translation', `${tile[1] + yOffset} 1 ${tile[0] + xOffset}`);
         }
     }
+
+    checkForGameOver(player) {
+        for (let i = 0; i < 4; i++) {
+            if (this.tokenPositons[player][i] !== playerPaths[player].length - 1) {
+                return false;
+            }
+        }
+
+        popup.innerHTML = `<div>${player} won!</div>`;
+        popup.style.display = 'flex';
+        side.style.opacity = 0;
+        return true;
+    }
 }
 
 rollDiceButton.addEventListener('click', () => {
     if (game.lastRolledValue == 0) {
         game.rollDice();
     } else {
-        alert('already rolled, make a move!');
+        alert('Aready rolled, make a move!');
     }
 });
 
