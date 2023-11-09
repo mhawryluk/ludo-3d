@@ -272,3 +272,10 @@ const startPositions = {
         [11, 11],
     ],
 };
+
+const safeTiles = [
+    [2, 6],
+    [8, 2],
+    [6, 12],
+    [12, 8],
+]

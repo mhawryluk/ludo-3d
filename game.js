@@ -85,17 +85,26 @@ class Game {
 
         const newTile = playerPaths[player][newPosition];
 
-        for (let otherPlayer of players) {
-            if (otherPlayer === player) continue;
+        if (safeTiles.findIndex(safeTile => arraysEqual(safeTile, newTile)) === -1) {
+            for (let otherPlayer of players) {
+                if (otherPlayer === player) continue;
 
-            for (let i = 0; i < 4; i++) {
-                const otherTokenTile = playerPaths[otherPlayer][this.tokenPositons[otherPlayer][i]];
+                const otherTilesFoundIndices = [];
 
-                if (arraysEqual(otherTokenTile, newTile)) {
-                    this.tokenPositons[otherPlayer][i] = -6;
+                for (let i = 0; i < 4; i++) {
+                    const otherTokenTile = playerPaths[otherPlayer][this.tokenPositons[otherPlayer][i]];
+
+                    if (arraysEqual(otherTokenTile, newTile)) {
+                        otherTilesFoundIndices.push(i);
+                    }
+                }
+
+                if (otherTilesFoundIndices.length === 1) {
+                    const otherTileIndex = otherTilesFoundIndices[0];
+                    this.tokenPositons[otherPlayer][otherTileIndex] = -6;
 
                     const startPosition = this.getFreeStartPosition(otherPlayer);
-                    tokens[otherPlayer][i].setAttribute('translation', `${startPosition[0]} 1 ${startPosition[1]}`);
+                    tokens[otherPlayer][otherTileIndex].setAttribute('translation', `${startPosition[0]} 1 ${startPosition[1]}`);
                 }
             }
         }
@@ -152,20 +161,14 @@ class Game {
         }
 
         const tokenCount = allTokensOnTile.length;
-
-        if (tokenCount < 2) {
-            return;
-        }
-
         const r = 0.35;
 
         for (let i = 0; i < tokenCount; i++) {
-            const xOffset = r * Math.cos(Math.PI / 180 * i * (360 / tokenCount));
-            const yOffset = r * Math.sin(Math.PI / 180 * i * (360 / tokenCount));
+            const xOffset = tokenCount == 1 ? 0 : r * Math.cos(Math.PI / 180 * i * (360 / tokenCount));
+            const yOffset = tokenCount == 1 ? 0 : r * Math.sin(Math.PI / 180 * i * (360 / tokenCount));
 
             allTokensOnTile[i].setAttribute('translation', `${tile[1] + yOffset} 1 ${tile[0] + xOffset}`);
         }
-
     }
 }
 

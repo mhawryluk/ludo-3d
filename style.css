@@ -34,7 +34,7 @@ header h1 {
 
 main {
     display: flex;
-    padding: 40px;
+    padding: 0 40px;
 }
 
 button {
