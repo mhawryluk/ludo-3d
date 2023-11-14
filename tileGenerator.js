@@ -17,6 +17,6 @@ for (let row = 0; row < 15; row++) {
     }
 }
 
-const scene = document.getElementsByTagName('scene')[0]
+const scene = document.getElementsByTagName('scene')[0];
 scene.innerHTML += tileCode;
 

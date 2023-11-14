@@ -30,7 +30,7 @@ class Game {
 
                 token.querySelector('shape').addEventListener('click', () => {
                     game.moveToken(token, player, i);
-                })
+                });
             }
         }
     }
@@ -104,7 +104,7 @@ class Game {
                     this.tokenPositons[otherPlayer][otherTileIndex] = -6;
 
                     const startPosition = this.getFreeStartPosition(otherPlayer);
-                    tokens[otherPlayer][otherTileIndex].setAttribute('translation', `${startPosition[0]} 1 ${startPosition[1]}`);
+                    tokens[otherPlayer][otherTileIndex].setAttribute('translation', `${startPosition[1]} 1 ${startPosition[0]}`);
                 }
             }
         }
@@ -186,11 +186,18 @@ class Game {
     }
 }
 
-rollDiceButton.addEventListener('click', () => {
+function onRollButtonClick() {
     if (game.lastRolledValue == 0) {
         game.rollDice();
     } else {
-        alert('Aready rolled, make a move!');
+        alert('Already rolled, make a move!');
+    }
+}
+
+rollDiceButton.addEventListener('click', onRollButtonClick);
+window.addEventListener('keypress', event => {
+    if (event.key === '.') {
+        onRollButtonClick();
     }
 });
 
