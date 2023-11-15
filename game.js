@@ -10,9 +10,10 @@ let game;
 
 class Game {
 
-    constructor(players) {
+    constructor(players, computerOpponentIndices = []) {
         this.players = players;
         this.numberOfPlayers = players.length;
+        this.computerOpponentIndices = computerOpponentIndices; // which of the indices of players are robots
         this.currentPlayerIndex = 0;
         this.currentPossibleMoves = [];
         this.lastRolledValue = 0;
@@ -22,6 +23,7 @@ class Game {
             this.tokenPositons[player] = [-6, -6, -6, -6];
         }
 
+        // get references to tokens and set their callbacks
         for (let player of this.players) {
             tokens[player] = [];
             for (let i = 0; i < 4; i++) {
@@ -30,11 +32,13 @@ class Game {
                 tokens[player].push(token);
 
                 token.querySelector('shape').addEventListener('click', () => {
-                    game.moveToken(token, player, i);
+                    if (game.isCurrentPlayerComputerOpponent()) return;
+                    game.moveToken(player, i);
                 });
             }
         }
 
+        // hide tokens of colors that are not used because of the set number of players
         for (let player of allPossiblePlayers) {
             if (this.players.findIndex(possiblePlayer => possiblePlayer === player) === -1) {
                 for (let i = 0; i < 4; i++) {
@@ -44,8 +48,17 @@ class Game {
                 }
             }
         }
+
+        // create computer components
+        this.computerOpponents = {};
+        for (let index of this.computerOpponentIndices) {
+            this.computerOpponents[index] = new ComputerOpponent(this, this.players[index]);
+        }
     }
 
+    /**
+    *  @return true if any move is possible after the roll, false otherwise
+    * */;
     rollDice(value) {
         const rolledValue = value ?? Math.floor(Math.random() * 6) + 1;
         infoDiv.innerText = `Rolled: ${rolledValue}`;
@@ -53,9 +66,15 @@ class Game {
 
         if (!this.checkPossibleMoves()) {
             this.nextPlayer();
+            return false;
         }
+
+        return true;
     }
 
+    /**
+    *  @return true if any move is possible, false otherwise
+    * */;
     checkPossibleMoves() {
         this.clearPossibleMoves();
         let isAnyPossible = false;
@@ -75,6 +94,10 @@ class Game {
         return isAnyPossible;
     }
 
+    isCurrentPlayerComputerOpponent() {
+        return this.computerOpponentIndices.includes(this.currentPlayerIndex);
+    }
+
     nextPlayer() {
         this.currentPlayerIndex++;
         this.currentPlayerIndex %= this.numberOfPlayers;
@@ -84,9 +107,21 @@ class Game {
 
         root.style.setProperty('--background-color', `var(--${this.players[this.currentPlayerIndex]}-bg)`);
         root.style.setProperty('--text-color', `var(--${this.players[this.currentPlayerIndex]}-text)`);
+
+        if (this.isCurrentPlayerComputerOpponent()) {
+            setTimeout(
+                () => this.computerOpponents[this.currentPlayerIndex].makeMove(),
+                1000,
+            );
+        }
     }
 
-    moveToken(token, player, i) {
+    /**
+    *  @return true if the token was moved successfully, false otherwise
+    * */;
+    moveToken(player, i) {
+        const token = tokens[player][i];
+
         if (player != this.players[this.currentPlayerIndex] || this.lastRolledValue == 0) return false;
 
         const oldTile = playerPaths[player][this.tokenPositons[player][i]];
@@ -96,6 +131,7 @@ class Game {
 
         const newTile = playerPaths[player][newPosition];
 
+        // check for sending opponent players home
         if (safeTiles.findIndex(safeTile => arraysEqual(safeTile, newTile)) === -1) {
             for (let otherPlayer of this.players) {
                 if (otherPlayer === player) continue;
@@ -137,6 +173,7 @@ class Game {
 
     getFreeStartPosition(player) {
         const takenStartPositions = tokens[player].map(token => {
+            // TODO: make it not dependent on the translation attribute in the visualization ;_;
             const translation = token.getAttribute('translation').split(' ');
             return [translation[1], translation[0]];
         });
@@ -197,7 +234,46 @@ class Game {
     }
 }
 
+class ComputerOpponent {
+    constructor(game, player, level = 'random') {
+        this.game = game;
+        this.player = player;
+        this.level = level;
+    }
+
+    makeMove() {
+        if (game.rollDice()) {
+            const possibleMoves = this.getPossibleMoves();
+            if (possibleMoves.length == 0) return;
+
+            const randomMove = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
+            game.moveToken(this.player, randomMove);
+
+            if (game.players[game.currentPlayerIndex] === this.player) {
+                setTimeout(() => this.makeMove(), 1000);
+            }
+        }
+    }
+
+    getPossibleMoves() {
+        const possibleMoves = [];
+
+        for (let i = 0; i < 4; i++) {
+            const position = game.tokenPositons[this.player][i];
+            const newPosition = position + game.lastRolledValue;
+
+            if (newPosition >= 0 && newPosition < playerPaths[this.player].length) {
+                possibleMoves.push(i);
+            }
+        }
+
+        return possibleMoves;
+    }
+}
+
 function onRollButtonClick() {
+    if (game.isCurrentPlayerComputerOpponent()) return;
+
     if (game.lastRolledValue == 0) {
         game.rollDice();
     } else {
@@ -212,8 +288,8 @@ window.addEventListener('keypress', event => {
     }
 });
 
-function setPlayers(players) {
-    game = new Game(players);
+function setPlayers(players, computerOpponentIndices) {
+    game = new Game(players, computerOpponentIndices);
     popup.style.display = 'none';
     side.style.opacity = 1;
 }
@@ -222,3 +298,4 @@ document.getElementById('2-players-button').addEventListener('click', () => setP
 document.getElementById('3-players-button').addEventListener('click', () => setPlayers(allPossiblePlayers.slice(0, 3)));
 document.getElementById('4-players-button').addEventListener('click', () => setPlayers(allPossiblePlayers));
 
+document.getElementById('easy-mode').addEventListener('click', () => setPlayers([allPossiblePlayers[0], allPossiblePlayers[2]], [1]));
