@@ -2,7 +2,7 @@
     --brown-bg: #e6ccb2;
     --brown-text: #7f5539;
 
-    --red-bg: #f8d8cd;
+    --red-bg: #fae4dc;
     --red-text: #eb6f6f;
 
     --yellow-bg: #f3f1e5;
@@ -86,4 +86,10 @@ side {
 .popup button {
     font-size: 50px;
     background-color: transparent;
+}
+
+.button-row {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
 }

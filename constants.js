@@ -1,4 +1,4 @@
-const players = ['blue', 'yellow', 'red', 'green'];
+const allPossiblePlayers = ['blue', 'yellow', 'green', 'red'];
 
 const playerPaths = {
     'red': [

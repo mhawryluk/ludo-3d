@@ -10,18 +10,19 @@ let game;
 
 class Game {
 
-    constructor(numberOfPlayers = 4) {
-        this.numberOfPlayers = numberOfPlayers;
+    constructor(players) {
+        this.players = players;
+        this.numberOfPlayers = players.length;
         this.currentPlayerIndex = 0;
         this.currentPossibleMoves = [];
         this.lastRolledValue = 0;
 
         this.tokenPositons = {};
-        for (let player of players) {
+        for (let player of this.players) {
             this.tokenPositons[player] = [-6, -6, -6, -6];
         }
 
-        for (let player of players) {
+        for (let player of this.players) {
             tokens[player] = [];
             for (let i = 0; i < 4; i++) {
                 const id = `${player}-token-${i + 1}`;
@@ -31,6 +32,16 @@ class Game {
                 token.querySelector('shape').addEventListener('click', () => {
                     game.moveToken(token, player, i);
                 });
+            }
+        }
+
+        for (let player of allPossiblePlayers) {
+            if (this.players.findIndex(possiblePlayer => possiblePlayer === player) === -1) {
+                for (let i = 0; i < 4; i++) {
+                    const id = `${player}-token-${i + 1}`;
+                    const token = document.getElementById(id);
+                    token.setAttribute('visible', 'false');
+                }
             }
         }
     }
@@ -50,7 +61,7 @@ class Game {
         let isAnyPossible = false;
 
         for (let i = 0; i < 4; i++) {
-            const player = players[this.currentPlayerIndex];
+            const player = this.players[this.currentPlayerIndex];
             const position = this.tokenPositons[player][i];
             const newPosition = position + this.lastRolledValue;
 
@@ -69,14 +80,14 @@ class Game {
         this.currentPlayerIndex %= this.numberOfPlayers;
         this.lastRolledValue = 0;
 
-        currentPlayerDiv.innerText = `Now playing: ${players[this.currentPlayerIndex]}`;
+        currentPlayerDiv.innerText = `Now playing: ${this.players[this.currentPlayerIndex]}`;
 
-        root.style.setProperty('--background-color', `var(--${players[this.currentPlayerIndex]}-bg)`);
-        root.style.setProperty('--text-color', `var(--${players[this.currentPlayerIndex]}-text)`);
+        root.style.setProperty('--background-color', `var(--${this.players[this.currentPlayerIndex]}-bg)`);
+        root.style.setProperty('--text-color', `var(--${this.players[this.currentPlayerIndex]}-text)`);
     }
 
     moveToken(token, player, i) {
-        if (player != players[this.currentPlayerIndex] || this.lastRolledValue == 0) return false;
+        if (player != this.players[this.currentPlayerIndex] || this.lastRolledValue == 0) return false;
 
         const oldTile = playerPaths[player][this.tokenPositons[player][i]];
         const newPosition = this.tokenPositons[player][i] += this.lastRolledValue;
@@ -86,7 +97,7 @@ class Game {
         const newTile = playerPaths[player][newPosition];
 
         if (safeTiles.findIndex(safeTile => arraysEqual(safeTile, newTile)) === -1) {
-            for (let otherPlayer of players) {
+            for (let otherPlayer of this.players) {
                 if (otherPlayer === player) continue;
 
                 const otherTilesFoundIndices = [];
@@ -143,7 +154,7 @@ class Game {
     }
 
     clearPossibleMoves() {
-        for (let player of players) {
+        for (let player of this.players) {
             for (let i = 0; i < 4; i++) {
                 tokens[player][i].querySelector('material').setAttribute('emissiveColor', '0 0 0');
             }
@@ -153,7 +164,7 @@ class Game {
     distributeTokensOnOneTile(tile) {
         const allTokensOnTile = [];
 
-        for (let player of players) {
+        for (let player of this.players) {
             for (let i = 0; i < 4; i++) {
                 const tokenTile = playerPaths[player][this.tokenPositons[player][i]];
                 if (!tokenTile) continue;
@@ -201,9 +212,13 @@ window.addEventListener('keypress', event => {
     }
 });
 
-document.getElementById('4-players-button').addEventListener('click', () => {
-    game = new Game(numberOfPlayers = 4);
+function setPlayers(players) {
+    game = new Game(players);
     popup.style.display = 'none';
     side.style.opacity = 1;
-});
+}
+
+document.getElementById('2-players-button').addEventListener('click', () => setPlayers([allPossiblePlayers[0], allPossiblePlayers[2]]));
+document.getElementById('3-players-button').addEventListener('click', () => setPlayers(allPossiblePlayers.slice(0, 3)));
+document.getElementById('4-players-button').addEventListener('click', () => setPlayers(allPossiblePlayers));
 
