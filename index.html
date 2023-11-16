@@ -41,9 +41,9 @@
 
         <x3d width='1000px' height='800px'>
             <scene>
+                <navigationinfo type='"examine" "any"' headlight="false"></navigationinfo>
                 <viewpoint def="topView" orientation='1 0 0 -1.57' bind="true" viewAll="true"></viewpoint>
-                <DirectionalLight id="directional" direction='0 -1 0' on="TRUE" intensity='0.5' shadowIntensity='0.0'>
-                </DirectionalLight>
+                <directionallight id="directional" direction='0 -1 0' on="TRUE" intensity='1' shadowIntensity='0.5'></directionallight>
 
                 <!-- blue tokens -->
                 <transform id='blue-token-1' translation="3 1 3">
