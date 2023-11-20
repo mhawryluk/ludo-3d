@@ -41,9 +41,18 @@
 
         <x3d width='1000px' height='800px'>
             <scene>
-                <navigationinfo type='"examine" "any"' headlight="false"></navigationinfo>
+                <navigationinfo type='"examine" "any"' headlight="false" reverseScroll='true'></navigationinfo>
                 <viewpoint def="topView" orientation='1 0 0 -1.57' bind="true" viewAll="true"></viewpoint>
-                <directionallight id="directional" direction='0 -1 0' on="TRUE" intensity='1' shadowIntensity='0.5'></directionallight>
+                <!-- <directionallight id="directional" direction='0.2 -1 0.2' on="TRUE" intensity='0.5' -->
+                <!-- shadowIntensity='0.3'> -->
+                <!-- </directionallight> -->
+
+                <PointLight ambientIntensity='0.5' attenuation='1,0,0' color='1,1,1' global='false' intensity='1'
+                    location='7.5 10 7.5' on='true' radius='100'></PointLight>
+
+                <transform translation="0 4 0">
+                    <inline url='./box.x3d'></inline>
+                </transform>
 
                 <!-- blue tokens -->
                 <transform id='blue-token-1' translation="3 1 3">
