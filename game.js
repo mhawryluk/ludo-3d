@@ -35,16 +35,19 @@ class Game {
                     if (game.isCurrentPlayerComputerOpponent()) return;
                     game.moveToken(player, i);
                 });
+
+                const startPosition = startPositions[player][i];
+                token.setAttribute('translation', `${startPosition[1]} 1 ${startPosition[0]}`);
             }
         }
 
         // hide tokens of colors that are not used because of the set number of players
         for (let player of allPossiblePlayers) {
-            if (this.players.findIndex(possiblePlayer => possiblePlayer === player) === -1) {
+            if (this.players.findIndex(possiblePlayer => possiblePlayer === player) !== -1) {
                 for (let i = 0; i < 4; i++) {
                     const id = `${player}-token-${i + 1}`;
                     const token = document.getElementById(id);
-                    token.setAttribute('visible', 'false');
+                    token.setAttribute('visible', 'true');
                 }
             }
         }
@@ -124,7 +127,13 @@ class Game {
 
         if (player != this.players[this.currentPlayerIndex] || this.lastRolledValue == 0) return false;
 
-        const oldTile = playerPaths[player][this.tokenPositons[player][i]];
+        let oldTile = playerPaths[player][this.tokenPositons[player][i]];
+        if (oldTile === undefined) {
+            const position = token.getAttribute('translation').split(' ');
+            oldTile = [parseFloat(position[2]), parseFloat(position[0])];
+        }
+
+        const oldPosition = this.tokenPositons[player][i];
         const newPosition = this.tokenPositons[player][i] += this.lastRolledValue;
 
         if (newPosition < 0) return false;
@@ -156,10 +165,36 @@ class Game {
             }
         }
 
-        token.setAttribute('translation', `${newTile[1]} 1 ${newTile[0]}`);
+        // set up and run move animation
+        let movesCount = 0;
+        let keyValue = `${oldTile[1]} 1 ${oldTile[0]}`;
 
-        if (oldTile) this.distributeTokensOnOneTile(oldTile);
-        this.distributeTokensOnOneTile(newTile);
+        for (let positionIndex = Math.max(oldPosition, -1); positionIndex < newPosition; positionIndex++) {
+            const position = (positionIndex == -1) ? oldTile : playerPaths[player][positionIndex];
+            const nextPosition = playerPaths[player][positionIndex + 1];
+
+            keyValue += `  ${(position[1] + nextPosition[1]) / 2} 2 ${(position[0] + nextPosition[0]) / 2}  ${nextPosition[1]} 1 ${nextPosition[0]}  `;
+            movesCount += 2;
+        }
+
+        let key = '0';
+        for (let j = 1; j <= movesCount; j++) {
+            key += ` ${j / movesCount}`;
+        }
+
+        const timeSensor = document.getElementById(`time-${player}-${i + 1}`);
+        const positionInterpolator = document.getElementById(`move-${player}-${i + 1}`);
+
+        positionInterpolator.setAttribute('keyValue', keyValue);
+        positionInterpolator.setAttribute('key', key);
+        timeSensor.setAttribute('cycleInterval', `${movesCount / 2}`);
+        timeSensor.setAttribute('loop', 'true');
+        timeSensor.setAttribute('loop', 'false');
+
+        setTimeout(() => {
+            if (oldTile) this.distributeTokensOnOneTile(oldTile);
+            this.distributeTokensOnOneTile(newTile);
+        }, movesCount * 500 + 100);
 
         if (!this.checkForGameOver(player) && this.lastRolledValue !== 6) {
             this.nextPlayer();

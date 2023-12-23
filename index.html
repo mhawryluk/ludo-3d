@@ -50,12 +50,12 @@
                 <PointLight ambientIntensity='0.5' attenuation='1,0,0' color='1,1,1' global='false' intensity='1'
                     location='7.5 10 7.5' on='true' radius='100'></PointLight>
 
-                <transform translation="0 4 0">
+                <transform translation="7.5 2 7.5">
                     <inline url='./box.x3d'></inline>
                 </transform>
 
                 <!-- blue tokens -->
-                <transform id='blue-token-1' translation="3 1 3">
+                <transform DEF='blue-token-1' id='blue-token-1' translation="3 1 3" visible="false">
                     <shape>
                         <appearance>
                             <material diffuseColor="blue" />
@@ -64,7 +64,7 @@
                     </shape>
                 </transform>
 
-                <transform id='blue-token-2' translation="2 1 2">
+                <transform id='blue-token-2' translation="2 1 2" visible="false">
                     <shape>
                         <appearance>
                             <material diffuseColor="blue" />
@@ -73,7 +73,7 @@
                     </shape>
                 </transform>
 
-                <transform id='blue-token-3' translation="2 1 3">
+                <transform id='blue-token-3' translation="2 1 3" visible="false">
                     <shape>
                         <appearance>
                             <material diffuseColor="blue" />
@@ -82,7 +82,7 @@
                     </shape>
                 </transform>
 
-                <transform id='blue-token-4' translation="3 1 2">
+                <transform id='blue-token-4' translation="3 1 2" visible="false">
                     <shape>
                         <appearance>
                             <material diffuseColor="blue" />
@@ -92,7 +92,7 @@
                 </transform>
 
                 <!-- red tokens -->
-                <transform id='red-token-1' translation="3 1 11">
+                <transform id='red-token-1' translation="3 1 11" visible="false">
                     <shape>
                         <appearance>
                             <material diffuseColor="red" />
@@ -101,7 +101,7 @@
                     </shape>
                 </transform>
 
-                <transform id='red-token-2' translation="2 1 12">
+                <transform id='red-token-2' translation="2 1 12" visible="false">
                     <shape>
                         <appearance>
                             <material diffuseColor="red" />
@@ -110,7 +110,7 @@
                     </shape>
                 </transform>
 
-                <transform id='red-token-3' translation="2 1 11">
+                <transform id='red-token-3' translation="2 1 11" visible="false">
                     <shape>
                         <appearance>
                             <material diffuseColor="red" />
@@ -119,7 +119,7 @@
                     </shape>
                 </transform>
 
-                <transform id='red-token-4' translation="3 1 12">
+                <transform id='red-token-4' translation="3 1 12" visible="false">
                     <shape>
                         <appearance>
                             <material diffuseColor="red" />
@@ -130,7 +130,7 @@
 
 
                 <!-- yellow tokens -->
-                <transform id='yellow-token-1' translation="11 1 3">
+                <transform id='yellow-token-1' translation="11 1 3" visible="false">
                     <shape>
                         <appearance>
                             <material diffuseColor="yellow" />
@@ -139,7 +139,7 @@
                     </shape>
                 </transform>
 
-                <transform id='yellow-token-2' translation="12 1 2">
+                <transform id='yellow-token-2' translation="12 1 2" visible="false">
                     <shape>
                         <appearance>
                             <material diffuseColor="yellow" />
@@ -148,7 +148,7 @@
                     </shape>
                 </transform>
 
-                <transform id='yellow-token-3' translation="12 1 3">
+                <transform id='yellow-token-3' translation="12 1 3" visible="false">
                     <shape>
                         <appearance>
                             <material diffuseColor="yellow" />
@@ -157,7 +157,7 @@
                     </shape>
                 </transform>
 
-                <transform id='yellow-token-4' translation="11 1 2">
+                <transform id='yellow-token-4' translation="11 1 2" visible="false">
                     <shape>
                         <appearance>
                             <material diffuseColor="yellow" />
@@ -168,7 +168,7 @@
 
 
                 <!-- green tokens -->
-                <transform id='green-token-1' translation="11 1 11">
+                <transform id='green-token-1' translation="11 1 11" visible="false">
                     <shape>
                         <appearance>
                             <material diffuseColor="green" />
@@ -177,7 +177,7 @@
                     </shape>
                 </transform>
 
-                <transform id='green-token-2' translation="12 1 12">
+                <transform id='green-token-2' translation="12 1 12" visible="false">
                     <shape>
                         <appearance>
                             <material diffuseColor="green" />
@@ -186,7 +186,7 @@
                     </shape>
                 </transform>
 
-                <transform id='green-token-3' translation="12 1 11">
+                <transform id='green-token-3' translation="12 1 11" visible="false">
                     <shape>
                         <appearance>
                             <material diffuseColor="green" />
@@ -195,7 +195,7 @@
                     </shape>
                 </transform>
 
-                <transform id='green-token-4' translation="11 1 12">
+                <transform id='green-token-4' translation="11 1 12" visible="false">
                     <shape>
                         <appearance>
                             <material diffuseColor="green" />
@@ -203,7 +203,6 @@
                         <cone bottomRadius="0.35" height="1" />
                     </shape>
                 </transform>
-
             </scene>
         </x3d>
 
