@@ -24,7 +24,7 @@ for (let player of ['blue', 'green', 'red', 'yellow']) {
         code += `
         <PositionInterpolator id="move-${player}-${i}" DEF="move-${player}-${i}" key="0 0.5 1" keyValue="1 1 0  0 3 0  0 1 0">
         </PositionInterpolator>
-        <timeSensor id="time-${player}-${i}" DEF="time-${player}-${i}" cycleInterval="2" loop="false"></timeSensor>
+        <timeSensor id="time-${player}-${i}" DEF="time-${player}-${i}"></timeSensor>
         <Route fromNode="time-${player}-${i}" fromField="fraction_changed" toNode="move-${player}-${i}" toField="set_fraction">
         </Route>
         <Route fromNode="move-${player}-${i}" fromField="value_changed" toNode="${player}-token-${i}" toField="translation">

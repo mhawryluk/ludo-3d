@@ -185,16 +185,17 @@ class Game {
         const timeSensor = document.getElementById(`time-${player}-${i + 1}`);
         const positionInterpolator = document.getElementById(`move-${player}-${i + 1}`);
 
+        const time = `${new Date().getTime() / 1000}`;
+
         positionInterpolator.setAttribute('keyValue', keyValue);
         positionInterpolator.setAttribute('key', key);
         timeSensor.setAttribute('cycleInterval', `${movesCount / 2}`);
-        timeSensor.setAttribute('loop', 'true');
-        timeSensor.setAttribute('loop', 'false');
+        timeSensor.setAttribute('starttime', time);
 
         setTimeout(() => {
             if (oldTile) this.distributeTokensOnOneTile(oldTile);
             this.distributeTokensOnOneTile(newTile);
-        }, movesCount * 500 + 100);
+        }, movesCount * 500 + 500);
 
         if (!this.checkForGameOver(player) && this.lastRolledValue !== 6) {
             this.nextPlayer();
