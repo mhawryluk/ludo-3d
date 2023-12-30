@@ -13,7 +13,7 @@ let game;
 
 class Game {
 
-    constructor(players, computerOpponentIndices = []) {
+    constructor(players, computerOpponentIndices = [], computerOpponentLevel = 'easy') {
         this.players = players;
         this.numberOfPlayers = players.length;
         this.computerOpponentIndices = computerOpponentIndices; // which of the indices of players are robots
@@ -60,7 +60,7 @@ class Game {
         // create computer components
         this.computerOpponents = {};
         for (let index of this.computerOpponentIndices) {
-            this.computerOpponents[index] = new ComputerOpponent(this, this.players[index]);
+            this.computerOpponents[index] = new (computerOpponentLevel === 'hard' ? MonteCarloOpponent : ComputerOpponent)(this, this.players[index]);
         }
     }
 
@@ -318,8 +318,9 @@ window.addEventListener('keypress', event => {
     }
 });
 
-function setPlayers(players, computerOpponentIndices) {
-    game = new Game(players, computerOpponentIndices);
+function setPlayers(players, computerOpponentIndices, computerOpponentLevel) {
+    game = new Game(players, computerOpponentIndices, computerOpponentLevel);
+
     popup.style.display = 'none';
     main.style.opacity = 1;
 
@@ -334,6 +335,7 @@ document.getElementById('3-players-button').addEventListener('click', () => setP
 document.getElementById('4-players-button').addEventListener('click', () => setPlayers(allPossiblePlayers));
 
 document.getElementById('easy-mode').addEventListener('click', () => setPlayers([allPossiblePlayers[0], allPossiblePlayers[2]], [1]));
+document.getElementById('hard-mode').addEventListener('click', () => setPlayers([allPossiblePlayers[0], allPossiblePlayers[2]], [1], 'hard'));
 
 h1.addEventListener('click', () => location.reload());
 
