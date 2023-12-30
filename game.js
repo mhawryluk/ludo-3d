@@ -52,6 +52,8 @@ class Game {
                     const token = document.getElementById(id);
                     token.setAttribute('visible', 'true');
                 }
+            } else {
+                document.querySelector(`.scoreboard .${player}`).style.display = 'none';
             }
         }
 
@@ -109,7 +111,7 @@ class Game {
         this.currentPlayerIndex %= this.numberOfPlayers;
         this.lastRolledValue = 0;
 
-        currentPlayerDiv.innerText = `Now playing: ${this.players[this.currentPlayerIndex]}`;
+        currentPlayerDiv.innerText = this.players[this.currentPlayerIndex];
 
         root.style.setProperty('--background-color', `var(--${this.players[this.currentPlayerIndex]}-bg)`);
         root.style.setProperty('--text-color', `var(--${this.players[this.currentPlayerIndex]}-text)`);
@@ -161,6 +163,7 @@ class Game {
 
                     const startPosition = this.getFreeStartPosition(otherPlayer);
                     tokens[otherPlayer][otherTileIndex].setAttribute('translation', `${startPosition[1]} 1 ${startPosition[0]}`);
+                    this.updatePlayerScore(otherPlayer);
                 }
             }
         }
@@ -196,6 +199,8 @@ class Game {
             if (oldTile) this.distributeTokensOnOneTile(oldTile);
             this.distributeTokensOnOneTile(newTile);
 
+            this.updatePlayerScore(player);
+
             if (!this.checkForGameOver(player) && this.lastRolledValue !== 6) {
                 this.nextPlayer();
             }
@@ -206,7 +211,7 @@ class Game {
 
             this.resetRolledValue();
 
-        }, movesCount * 250 + 500);
+        }, movesCount * 250);
 
         this.clearPossibleMoves();
 
@@ -286,6 +291,14 @@ class Game {
         side.style.opacity = 0;
         return true;
     }
+
+    updatePlayerScore(player) {
+        scoreDivs[player].innerText = this.getPlayerScore(player);
+    }
+
+    getPlayerScore(player) {
+        return this.tokenPositons[player].reduce((a, b) => a + b, 0) + 24;
+    }
 }
 
 function onRollButtonClick() {
@@ -321,3 +334,10 @@ document.getElementById('3-players-button').addEventListener('click', () => setP
 document.getElementById('4-players-button').addEventListener('click', () => setPlayers(allPossiblePlayers));
 
 document.getElementById('easy-mode').addEventListener('click', () => setPlayers([allPossiblePlayers[0], allPossiblePlayers[2]], [1]));
+
+h1.addEventListener('click', () => location.reload());
+
+const scoreDivs = {};
+for (let player of allPossiblePlayers) {
+    scoreDivs[player] = document.querySelector(`.scoreboard .${player} .value`);
+}

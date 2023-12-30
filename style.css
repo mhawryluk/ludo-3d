@@ -16,6 +16,8 @@
 
     --background-color: var(--blue-bg);
     --text-color: var(--blue-text);
+
+    --transition-duration: 1000ms;
 }
 
 * {
@@ -25,13 +27,13 @@
 
 body {
     background-color: var(--background-color);
-    transition: background-color 1000ms;
+    transition: background-color var(--transition-duration);
     height: 100svh;
     margin: 0;
 
     display: flex;
     align-items: flex-end;
-    transition: all 1000ms;
+    transition: all var(--transition-duration);
 }
 
 .dot-bg {
@@ -47,6 +49,7 @@ body {
 }
 
 h1 {
+    cursor: pointer;
     position: absolute;
     top: 0;
     left: 50%;
@@ -55,7 +58,7 @@ h1 {
     z-index: 20;
     font-size: 3rem;
 
-    transition: all 2000ms;
+    transition: all var(--transition-duration);
 }
 
 main {
@@ -64,18 +67,18 @@ main {
     display: flex;
     align-items: center;
 
-    transition: opacity 500ms ease-in;
+    transition: opacity calc(var(--transition-duration) / 2) ease-in;
 }
 
 button {
-    background-color: rgba(255, 255, 255, 0.4);
     color: var(--text-color);
     font-weight: bolder;
     font-size: 30px;
     border: none;
     cursor: pointer;
     padding: 10px;
-    transition: color 1000ms;
+    transition: color var(--transition-duration);
+    background-color: transparent;
 }
 
 side {
@@ -101,8 +104,8 @@ side {
     translate: 100vw;
 
     transition:
-        color 1000ms,
-        translate 500ms;
+        color var(--transition-duration),
+        translate var(--transition-duration);
 }
 
 .popup {
@@ -131,7 +134,6 @@ side {
 
 .popup button {
     font-size: 2.25rem;
-    background-color: transparent;
     color: inherit;
     padding: 0 1rem;
     border-radius: 0.5rem;
@@ -139,7 +141,8 @@ side {
     cursor: pointer;
 }
 
-button:hover {
+button:hover,
+h1:hover {
     color: white;
     transition: none;
 }
@@ -149,4 +152,47 @@ button:hover {
     justify-content: center;
     gap: 30px;
     margin-bottom: 30px;
+}
+
+.scoreboard {
+    position: relative;
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+    padding: 1rem;
+
+    border: .125rem solid var(--text-color);
+    border-radius: 1rem;
+}
+
+.scoreboard .dot {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+}
+
+.scoreboard>div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.blue .dot {
+    background-color: var(--blue-text);
+}
+
+.yellow .dot {
+    background-color: var(--yellow-text);
+}
+
+.red .dot {
+    background-color: var(--red-text);
+}
+
+.green .dot {
+    background-color: var(--green-text);
 }
