@@ -7,6 +7,7 @@
     <script type='text/javascript' src='./constants.js' defer> </script>
     <script type='text/javascript' src='./initTiles.js' defer> </script>
     <script type='text/javascript' src='./game.js' defer> </script>
+    <script type='text/javascript' src='./computerOpponents.js' defer> </script>
     <link rel='stylesheet' type='text/css' href='https://www.x3dom.org/download/x3dom.css'>
     <link rel='stylesheet' type='text/css' href='./style.css'>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -39,7 +40,7 @@
             </div>
         </div>
 
-        <x3d width='1000px' height='800px'>
+        <x3d width='1000px' height='700px'>
             <scene>
                 <navigationinfo type='"examine" "any"' headlight="false" reverseScroll='true'></navigationinfo>
                 <viewpoint def="topView" orientation='1 0 0 -1.57' bind="true" viewAll="true"></viewpoint>
@@ -49,7 +50,7 @@
 
                 <PointLight ambientIntensity='0.5' attenuation='1,0,0' color='1,1,1' global='false' intensity='1'
                     location='7.5 10 7.5' on='true' radius='100'></PointLight>
-                
+
                 <!-- table -->
                 <transform translation="7 -2 7">
                     <inline url='./Textures/table.x3d'></inline>

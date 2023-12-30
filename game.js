@@ -112,10 +112,7 @@ class Game {
         root.style.setProperty('--text-color', `var(--${this.players[this.currentPlayerIndex]}-text)`);
 
         if (this.isCurrentPlayerComputerOpponent()) {
-            setTimeout(
-                () => this.computerOpponents[this.currentPlayerIndex].makeMove(),
-                1000,
-            );
+            this.moveComputerOpponent(this.currentPlayerIndex);
         }
     }
 
@@ -189,19 +186,25 @@ class Game {
 
         positionInterpolator.setAttribute('keyValue', keyValue);
         positionInterpolator.setAttribute('key', key);
-        timeSensor.setAttribute('cycleInterval', `${movesCount / 2}`);
+        timeSensor.setAttribute('cycleInterval', `${movesCount / 4}`);
         timeSensor.setAttribute('starttime', time);
 
         setTimeout(() => {
             if (oldTile) this.distributeTokensOnOneTile(oldTile);
             this.distributeTokensOnOneTile(newTile);
-        }, movesCount * 500 + 500);
 
-        if (!this.checkForGameOver(player) && this.lastRolledValue !== 6) {
-            this.nextPlayer();
-        }
+            if (!this.checkForGameOver(player) && this.lastRolledValue !== 6) {
+                this.nextPlayer();
+            }
 
-        this.resetRolledValue();
+            if (this.lastRolledValue === 6 && this.isCurrentPlayerComputerOpponent()) {
+                this.moveComputerOpponent(this.currentPlayerIndex);
+            }
+
+            this.resetRolledValue();
+
+        }, movesCount * 250 + 500);
+
         this.clearPossibleMoves();
 
         return true;
@@ -221,9 +224,21 @@ class Game {
         }
     }
 
+    moveComputerOpponent(index) {
+        setTimeout(
+            () => infoDiv.innerText = 'Computer\'s turn',
+            1000,
+        );
+
+        setTimeout(
+            () => this.computerOpponents[index].makeMove(),
+            2000,
+        );
+    }
+
     resetRolledValue() {
         this.lastRolledValue = 0;
-        infoDiv.innerText = `Roll the dice!`;
+        infoDiv.innerText = this.isCurrentPlayerComputerOpponent() ? 'Computer\'s turn' : 'Roll the dice!';
     }
 
     clearPossibleMoves() {
@@ -267,43 +282,6 @@ class Game {
         popup.style.display = 'flex';
         side.style.opacity = 0;
         return true;
-    }
-}
-
-class ComputerOpponent {
-    constructor(game, player, level = 'random') {
-        this.game = game;
-        this.player = player;
-        this.level = level;
-    }
-
-    makeMove() {
-        if (game.rollDice()) {
-            const possibleMoves = this.getPossibleMoves();
-            if (possibleMoves.length == 0) return;
-
-            const randomMove = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
-            game.moveToken(this.player, randomMove);
-
-            if (game.players[game.currentPlayerIndex] === this.player) {
-                setTimeout(() => this.makeMove(), 1000);
-            }
-        }
-    }
-
-    getPossibleMoves() {
-        const possibleMoves = [];
-
-        for (let i = 0; i < 4; i++) {
-            const position = game.tokenPositons[this.player][i];
-            const newPosition = position + game.lastRolledValue;
-
-            if (newPosition >= 0 && newPosition < playerPaths[this.player].length) {
-                possibleMoves.push(i);
-            }
-        }
-
-        return possibleMoves;
     }
 }
 
