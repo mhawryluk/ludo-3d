@@ -20,21 +20,51 @@
 
 * {
     font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
 }
 
 body {
     background-color: var(--background-color);
     transition: background-color 1000ms;
+    height: 100svh;
+    margin: 0;
+
+    display: flex;
+    align-items: flex-end;
+    transition: all 1000ms;
 }
 
-header h1 {
-    margin: 30px;
+.dot-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -5;
+
+    background-image: radial-gradient(white 1.2px, rgba(128, 128, 128, 0.137) 1.2px);
+    background-size: 20px 20px;
+    opacity: 0.5;
+}
+
+h1 {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    translate: -50%;
     color: var(--text-color);
+    z-index: 20;
+    font-size: 3rem;
+
+    transition: all 2000ms;
 }
 
 main {
+    margin-top: auto;
+    opacity: 0;
     display: flex;
-    padding: 0 40px;
+    align-items: center;
+
+    transition: opacity 500ms ease-in;
 }
 
 button {
@@ -49,17 +79,30 @@ button {
 }
 
 side {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 40%;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 30px;
+    gap: 2rem;
     font-size: 30px;
     font-weight: 500;
-    width: 50%;
+    height: 100%;
     color: var(--text-color);
-    transition: color 1000ms;
-    opacity: 0;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    text-align: center;
+    background-color: inherit;
+
+    translate: 100vw;
+
+    transition:
+        color 1000ms,
+        translate 500ms;
 }
 
 .popup {
@@ -67,25 +110,38 @@ side {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: var(--text-color);
-    width: 90%;
+    color: var(--green-text);
+    width: 75%;
     height: 65%;
     z-index: 3;
-    background-color: rgba(254, 254, 254, 0.9);
+    background-color: var(--green-bg);
     padding: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    text-align: center;
+    overflow: auto;
 }
 
 .popup div {
-    font-size: 30px;
+    font-size: 2rem;
 }
 
 .popup button {
-    font-size: 50px;
+    font-size: 2.25rem;
     background-color: transparent;
+    color: inherit;
+    padding: 0 1rem;
+    border-radius: 0.5rem;
+    margin-top: 1rem;
+    cursor: pointer;
+}
+
+button:hover {
+    color: white;
+    transition: none;
 }
 
 .button-row {

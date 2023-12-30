@@ -4,6 +4,9 @@ const rollDiceButton = document.getElementById('roll-button');
 const popup = document.querySelector('.popup');
 const root = document.querySelector(':root');
 const side = document.querySelector('side');
+const main = document.querySelector('main');
+const h1 = document.querySelector('h1');
+
 const tokens = {};
 
 let game;
@@ -68,7 +71,7 @@ class Game {
         this.lastRolledValue = rolledValue;
 
         if (!this.checkPossibleMoves()) {
-            this.nextPlayer();
+            setTimeout(() => this.nextPlayer(), 300);
             return false;
         }
 
@@ -305,7 +308,12 @@ window.addEventListener('keypress', event => {
 function setPlayers(players, computerOpponentIndices) {
     game = new Game(players, computerOpponentIndices);
     popup.style.display = 'none';
-    side.style.opacity = 1;
+    main.style.opacity = 1;
+
+    side.style.translate = '0';
+
+    h1.style.left = '10rem';
+    h1.style.fontSize = '2rem';
 }
 
 document.getElementById('2-players-button').addEventListener('click', () => setPlayers([allPossiblePlayers[0], allPossiblePlayers[2]]));

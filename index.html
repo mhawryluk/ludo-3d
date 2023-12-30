@@ -23,24 +23,24 @@
         <h1>Ludo 3D</h1>
     </header>
 
-    <main>
-        <div class="popup">
-            <div>Select number of players:</div>
-            <div class="button-row">
-                <button id="2-players-button">2</button>
-                <button id="3-players-button">3</button>
-                <button id="4-players-button">4</button>
-            </div>
-
-            <div>or play one-on-one against the computer</div>
-            <div>Select difficulty:</div>
-
-            <div class="button-row">
-                <button id="easy-mode">Easy</button>
-            </div>
+    <div class="popup">
+        <div>Select number of players:</div>
+        <div class="button-row">
+            <button id="2-players-button">2</button>
+            <button id="3-players-button">3</button>
+            <button id="4-players-button">4</button>
         </div>
 
-        <x3d width='1000px' height='700px'>
+        <div>or play one-on-one against the computer</div>
+        <div>Select difficulty:</div>
+
+        <div class="button-row">
+            <button id="easy-mode">Easy</button>
+        </div>
+    </div>
+
+    <main>
+        <x3d width='950px' height='800px'>
             <scene>
                 <navigationinfo type='"examine" "any"' headlight="false" reverseScroll='true'></navigationinfo>
                 <viewpoint def="topView" orientation='1 0 0 -1.57' bind="true" viewAll="true"></viewpoint>
@@ -207,13 +207,15 @@
                 </transform>
             </scene>
         </x3d>
-
-        <side>
-            <div id="info">Hello! Let the games begin.</div>
-            <div id="current-player">Now playing: Blue</div>
-            <button id="roll-button">Roll the dice</button>
-        </side>
     </main>
+
+    <side>
+        <div id="info">Hello! Let the games begin.</div>
+        <div id="current-player">Now playing: Blue</div>
+        <button id="roll-button">Roll the dice</button>
+    </side>
+
+    <div class="dot-bg"></div>
 
     <script type='text/javascript' src='./tileGenerator.js'> </script>
 </body>
