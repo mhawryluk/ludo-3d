@@ -43,12 +43,31 @@
     <main>
         <x3d width='950px' height='800px'>
             <scene>
-                <navigationinfo type='"examine" "any"' headlight="false" reverseScroll='true'></navigationinfo>
-                <viewpoint def="topView" orientation='1 0 0 -1.57' bind="true" viewAll="true"></viewpoint>
-                <!-- <directionallight id="directional" direction='0.2 -1 0.2' on="TRUE" intensity='0.5' -->
-                <!-- shadowIntensity='0.3'> -->
-                <!-- </directionallight> -->
+                <NavigationInfo type='"examine" "any"' headlight="false" reverseScroll='true'></NavigationInfo>
 
+                <!-- viewpoints -->
+                <Viewpoint def='far-viewpoint' class='far-viewpoint' position="-45.45171 21.80305 17.91539"
+                    orientation="-0.19828 -0.95682 -0.21254 1.42313" zNear="5.68889" zFar="100"
+                    centerOfRotation="7.00000 0.50000 7.00000" fieldOfView="0.78540" description="" bind="true">
+                </Viewpoint>
+
+                <Viewpoint def='blue-viewpoint' class='blue-viewpoint' position="-9.99837 13.56152 0.54436"
+                    orientation="-0.19685 -0.93199 -0.30437 2.01508" zNear="5.68889" zFar="100"
+                    centerOfRotation="7 0.5 7" fieldOfView="0.78540" description=""></Viewpoint>
+
+                <Viewpoint def='red-viewpoint' class='red-viewpoint' position="-4.94686 13.23193 21.01406"
+                    orientation="-0.61577 -0.74915 -0.24414 0.93275" zNear="5.68889" zFar="100.00000"
+                    centerOfRotation="7.00000 0.50000 7.00000" fieldOfView="0.78540" description=""></Viewpoint>
+
+                <Viewpoint def='green-viewpoint' class='green-viewpoint' position="23.92938 13.03159 14.58805"
+                    orientation="-0.38214 0.87186 0.30633 1.28666" zNear="5.68889" zFar="100"
+                    centerOfRotation="7.00000 0.50000 7.00000" fieldOfView="0.78540" description=""></Viewpoint>
+
+                <Viewpoint def='yellow-viewpoint' class='yellow-viewpoint' position="19.28017 13.07322 -8.72554"
+                    orientation="-0.12169 0.95565 0.26818 2.48122" zNear="5.68889" zFar="100"
+                    centerOfRotation="7.00000 0.50000 7.00000" fieldOfView="0.78540" description=""></Viewpoint>
+
+                <!-- lights -->
                 <PointLight ambientIntensity='0.5' attenuation='1,0,0' color='1,1,1' global='false' intensity='1'
                     location='7.5 10 7.5' on='true' radius='100'></PointLight>
 

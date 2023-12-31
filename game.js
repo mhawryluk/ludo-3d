@@ -116,6 +116,8 @@ class Game {
         root.style.setProperty('--background-color', `var(--${this.players[this.currentPlayerIndex]}-bg)`);
         root.style.setProperty('--text-color', `var(--${this.players[this.currentPlayerIndex]}-text)`);
 
+        viewPoints[this.players[this.currentPlayerIndex]].setAttribute('set_bind', 'true');
+
         if (this.isCurrentPlayerComputerOpponent()) {
             this.moveComputerOpponent(this.currentPlayerIndex);
         }
@@ -222,7 +224,7 @@ class Game {
         const takenStartPositions = tokens[player].map(token => {
             // TODO: make it not dependent on the translation attribute in the visualization ;_;
             const translation = token.getAttribute('translation').split(' ');
-            return [translation[1], translation[0]];
+            return [translation[2], translation[0]];
         });
 
         for (let position of startPositions[player]) {
@@ -328,6 +330,8 @@ function setPlayers(players, computerOpponentIndices, computerOpponentLevel) {
 
     h1.style.left = '10rem';
     h1.style.fontSize = '2rem';
+
+    viewPoints['blue'].setAttribute('set_bind', 'true');
 }
 
 document.getElementById('2-players-button').addEventListener('click', () => setPlayers([allPossiblePlayers[0], allPossiblePlayers[2]]));
@@ -340,6 +344,10 @@ document.getElementById('hard-mode').addEventListener('click', () => setPlayers(
 h1.addEventListener('click', () => location.reload());
 
 const scoreDivs = {};
+const viewPoints = {};
+
 for (let player of allPossiblePlayers) {
     scoreDivs[player] = document.querySelector(`.scoreboard .${player} .value`);
+    viewPoints[player] = document.querySelector(`.${player}-viewpoint`);
 }
+
