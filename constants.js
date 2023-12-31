@@ -100,7 +100,6 @@ const playerPaths = {
         [14, 8],
         [14, 7],
         [14, 6],
-        [14, 6],
         [13, 6],
         [12, 6],
         [11, 6],
@@ -275,4 +274,4 @@ const safeTiles = [
     [8, 2],
     [6, 12],
     [12, 8],
-]
+].concat(Object.values(playerPaths).map(path => path[0]));

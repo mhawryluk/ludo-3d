@@ -224,7 +224,7 @@ class Game {
         const takenStartPositions = tokens[player].map(token => {
             // TODO: make it not dependent on the translation attribute in the visualization ;_;
             const translation = token.getAttribute('translation').split(' ');
-            return [translation[2], translation[0]];
+            return [parseInt(translation[2]), parseInt(translation[0])];
         });
 
         for (let position of startPositions[player]) {

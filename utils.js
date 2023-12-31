@@ -11,3 +11,7 @@ function arraysEqual(a, b) {
 
     return true;
 }
+
+function copyArray(array) {
+    return JSON.parse(JSON.stringify(array));
+}

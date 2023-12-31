@@ -1,7 +1,3 @@
-function copyArray(array) {
-    return JSON.parse(JSON.stringify(array));
-}
-
 class ComputerOpponent {
     constructor(game, player) {
         this.game = game;
