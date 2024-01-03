@@ -35,7 +35,7 @@ class Game {
                 const token = document.getElementById(id);
                 tokens[player].push(token);
 
-                token.querySelector('shape').addEventListener('click', () => {
+                document.querySelector(`#${player}-token-${i + 1}__pawn-shape`).addEventListener('click', () => {
                     if (game.isCurrentPlayerComputerOpponent()) return;
                     game.moveToken(player, i);
                 });
@@ -103,7 +103,7 @@ class Game {
             if (newPosition >= 0 && newPosition < playerPaths[player].length) {
                 isAnyPossible = true;
 
-                tokens[player][i].querySelector('material').setAttribute('emissiveColor', '0.5 0.5 0.5');
+                document.querySelector(`#${player}-token-${i + 1}__pawn-material`).setAttribute('emissiveColor', '0.5 0.5 0.5');
             }
         }
 
@@ -281,7 +281,7 @@ class Game {
     clearPossibleMoves() {
         for (let player of this.players) {
             for (let i = 0; i < 4; i++) {
-                tokens[player][i].querySelector('material').setAttribute('emissiveColor', '0 0 0');
+                document.querySelector(`#${player}-token-${i + 1}__pawn-material`).setAttribute('emissiveColor', '0 0 0');
             }
         }
     }
@@ -348,6 +348,8 @@ window.addEventListener('keypress', event => {
 });
 
 function setPlayers(players, computerOpponentIndices, computerOpponentLevel) {
+    game = new Game(players, computerOpponentIndices, computerOpponentLevel);
+
     popup.style.display = 'none';
     main.style.opacity = 1;
 
@@ -357,8 +359,6 @@ function setPlayers(players, computerOpponentIndices, computerOpponentLevel) {
     h1.style.fontSize = '2rem';
 
     viewPoints['blue'].setAttribute('set_bind', 'true');
-
-    game = new Game(players, computerOpponentIndices, computerOpponentLevel);
 }
 
 document.getElementById('2-players-button').addEventListener('click', () => setPlayers([allPossiblePlayers[0], allPossiblePlayers[2]]));
