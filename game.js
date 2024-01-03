@@ -6,6 +6,7 @@ const root = document.querySelector(':root');
 const side = document.querySelector('side');
 const main = document.querySelector('main');
 const h1 = document.querySelector('h1');
+const dice = document.querySelector('.dice');
 
 const tokens = {};
 
@@ -69,15 +70,22 @@ class Game {
     * */;
     rollDice(value) {
         const rolledValue = value ?? Math.floor(Math.random() * 6) + 1;
-        infoDiv.innerText = `Rolled: ${rolledValue}`;
-        this.lastRolledValue = rolledValue;
+        rollDiceAnimate(rolledValue);
 
-        if (!this.checkPossibleMoves()) {
-            setTimeout(() => this.nextPlayer(), 300);
-            return false;
-        }
+        return new Promise(resolve => {
+            setTimeout(() => {
+                infoDiv.innerText = `Rolled: ${rolledValue}`;
+                this.lastRolledValue = rolledValue;
 
-        return true;
+
+                if (!this.checkPossibleMoves()) {
+                    setTimeout(() => this.nextPlayer(), 300);
+                    resolve(false);
+                }
+
+                resolve(true);
+            }, diceAnimationLength + 50);
+        });
     }
 
     /**
@@ -119,7 +127,10 @@ class Game {
         viewPoints[this.players[this.currentPlayerIndex]].setAttribute('set_bind', 'true');
 
         if (this.isCurrentPlayerComputerOpponent()) {
+            rollDiceButton.style.opacity = '0.5';
             this.moveComputerOpponent(this.currentPlayerIndex);
+        } else {
+            rollDiceButton.style.opacity = '1';
         }
     }
 
@@ -350,4 +361,3 @@ for (let player of allPossiblePlayers) {
     scoreDivs[player] = document.querySelector(`.scoreboard .${player} .value`);
     viewPoints[player] = document.querySelector(`.${player}-viewpoint`);
 }
-

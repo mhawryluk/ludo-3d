@@ -5,14 +5,15 @@ class ComputerOpponent {
     }
 
     makeMove() {
-        console.log('comp')
-        if (game.rollDice()) {
-            const possibleMoves = this.getPossibleMoves();
-            if (possibleMoves.length == 0) return;
+        game.rollDice().then(anyMoves => {
+            if (anyMoves) {
+                const possibleMoves = this.getPossibleMoves();
+                if (possibleMoves.length == 0) return;
 
-            const randomMove = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
-            game.moveToken(this.player, randomMove);
-        }
+                const randomMove = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
+                game.moveToken(this.player, randomMove);
+            }
+        });
     }
 
     getPossibleMoves() {
@@ -42,17 +43,19 @@ class MonteCarloOpponent extends ComputerOpponent {
     }
 
     makeMove() {
-        if (game.rollDice()) {
-            const possibleMoves = this.getPossibleMoves();
-            if (possibleMoves.length == 0) return;
-            if (possibleMoves.length == 1) {
-                game.moveToken(this.player, possibleMoves[0]);
-                return;
-            }
+        game.rollDice().then(anyMoves => {
+            if (anyMoves) {
+                const possibleMoves = this.getPossibleMoves();
+                if (possibleMoves.length == 0) return;
+                if (possibleMoves.length == 1) {
+                    game.moveToken(this.player, possibleMoves[0]);
+                    return;
+                }
 
-            const bestMove = this.monteCarlo(possibleMoves);
-            game.moveToken(this.player, bestMove);
-        }
+                const bestMove = this.monteCarlo(possibleMoves);
+                game.moveToken(this.player, bestMove);
+            }
+        });
     }
 
     monteCarlo(possibleMoves) {

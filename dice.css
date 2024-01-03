@@ -1,0 +1,148 @@
+.dice {
+    --size: 100px;
+
+    position: relative;
+    width: var(--size);
+    aspect-ratio: 1;
+    transform-style: preserve-3d;
+    transition: 1s ease;
+}
+
+.dice>div {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: white;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px inset;
+}
+
+.dice .dot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: black;
+}
+
+.front {
+    transform: translateZ(calc(var(--size) / 2));
+}
+
+.back {
+    transform: rotateX(180deg) translateZ(calc(var(--size) / 2));
+}
+
+.top {
+    transform: rotateX(90deg) translateZ(calc(var(--size) / 2));
+}
+
+.bottom {
+    transform: rotateX(-90deg) translateZ(calc(var(--size) / 2));
+}
+
+.right {
+    transform: rotateY(90deg) translateZ(calc(var(--size) / 2));
+}
+
+.left {
+    transform: rotateY(-90deg) translateZ(calc(var(--size) / 2));
+}
+
+.back .dot:nth-child(1) {
+    top: 20%;
+    left: 20%;
+}
+
+.back .dot:nth-child(2) {
+    top: 20%;
+    left: 80%;
+}
+
+.back .dot:nth-child(3) {
+    top: 50%;
+    left: 20%;
+}
+
+.back .dot:nth-child(4) {
+    top: 50%;
+    left: 80%;
+}
+
+.back .dot:nth-child(5) {
+    top: 80%;
+    left: 20%;
+}
+
+.back .dot:nth-child(6) {
+    top: 80%;
+    left: 80%;
+}
+
+.top .dot:nth-child(1) {
+    top: 30%;
+    left: 30%;
+}
+
+.top .dot:nth-child(2) {
+    top: 70%;
+    left: 70%;
+}
+
+.right .dot:nth-child(1) {
+    top: 20%;
+    left: 20%;
+}
+
+.right .dot:nth-child(3) {
+    top: 80%;
+    left: 80%;
+}
+
+.left .dot:nth-child(1) {
+    top: 30%;
+    left: 30%;
+}
+
+.left .dot:nth-child(2) {
+    top: 70%;
+    left: 30%;
+}
+
+.left .dot:nth-child(3) {
+    top: 30%;
+    left: 70%;
+}
+
+.left .dot:nth-child(4) {
+    top: 70%;
+    left: 70%;
+}
+
+.bottom .dot:nth-child(1) {
+    top: 20%;
+    left: 20%;
+}
+
+.bottom .dot:nth-child(2) {
+    top: 20%;
+    left: 80%;
+}
+
+.bottom .dot:nth-child(4) {
+    top: 80%;
+    left: 20%;
+}
+
+.bottom .dot:nth-child(5) {
+    top: 80%;
+    left: 80%;
+}
+
+@keyframes roll {
+    50% {
+        transform: rotateX(360deg) rotateY(270deg);
+    }
+}

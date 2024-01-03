@@ -275,3 +275,6 @@ const safeTiles = [
     [6, 12],
     [12, 8],
 ].concat(Object.values(playerPaths).map(path => path[0]));
+
+
+const diceAnimationLength = 2000;
