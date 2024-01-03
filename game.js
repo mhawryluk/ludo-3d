@@ -69,7 +69,7 @@ class Game {
     *  @return true if any move is possible after the roll, false otherwise
     * */;
     rollDice(value) {
-        const rolledValue = value ?? Math.floor(Math.random() * 6) + 1;
+        const rolledValue = value ?? Math.floor(Math.random() * 2) + 5;
         rollDiceAnimate(rolledValue);
 
         return new Promise(resolve => {
