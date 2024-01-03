@@ -173,10 +173,26 @@ class Game {
                 if (otherTilesFoundIndices.length === 1) {
                     const otherTileIndex = otherTilesFoundIndices[0];
                     this.tokenPositons[otherPlayer][otherTileIndex] = -6;
-
                     const startPosition = this.getFreeStartPosition(otherPlayer);
-                    tokens[otherPlayer][otherTileIndex].setAttribute('translation', `${startPosition[1]} 1 ${startPosition[0]}`);
-                    this.updatePlayerScore(otherPlayer);
+
+                    setTimeout(() => {
+                        let keyValue = `${newTile[1]} 1 ${oldTile[0]}  ${newTile[1]} 5 ${oldTile[0]}  ${startPosition[1]} 1 ${startPosition[0]}`;
+                        let key = '0 0.2 1';
+
+                        const timeSensor = document.getElementById(`time-${otherPlayer}-${otherTileIndex + 1}`);
+                        const positionInterpolator = document.getElementById(`move-${otherPlayer}-${otherTileIndex + 1}`);
+
+                        const time = `${new Date().getTime() / 1000}`;
+
+                        positionInterpolator.setAttribute('keyValue', keyValue);
+                        positionInterpolator.setAttribute('key', key);
+                        timeSensor.setAttribute('cycleInterval', `2`);
+                        timeSensor.setAttribute('starttime', time);
+
+                        // tokens[otherPlayer][otherTileIndex].setAttribute('translation', `${startPosition[1]} 1 ${startPosition[0]}`);
+
+                        this.updatePlayerScore(otherPlayer);
+                    }, this.lastRolledValue * 500);
                 }
             }
         }
@@ -332,8 +348,6 @@ window.addEventListener('keypress', event => {
 });
 
 function setPlayers(players, computerOpponentIndices, computerOpponentLevel) {
-    game = new Game(players, computerOpponentIndices, computerOpponentLevel);
-
     popup.style.display = 'none';
     main.style.opacity = 1;
 
@@ -343,6 +357,8 @@ function setPlayers(players, computerOpponentIndices, computerOpponentLevel) {
     h1.style.fontSize = '2rem';
 
     viewPoints['blue'].setAttribute('set_bind', 'true');
+
+    game = new Game(players, computerOpponentIndices, computerOpponentLevel);
 }
 
 document.getElementById('2-players-button').addEventListener('click', () => setPlayers([allPossiblePlayers[0], allPossiblePlayers[2]]));
