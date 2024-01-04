@@ -1,11 +1,9 @@
 const infoDiv = document.getElementById('info');
 const currentPlayerDiv = document.getElementById('current-player');
 const rollDiceButton = document.getElementById('roll-button');
-const popup = document.querySelector('.popup');
 const root = document.querySelector(':root');
 const side = document.querySelector('side');
 const main = document.querySelector('main');
-const h1 = document.querySelector('h1');
 const dice = document.querySelector('.dice');
 
 const tokens = {};
@@ -14,10 +12,9 @@ let game;
 
 class Game {
 
-    constructor(players, computerOpponentIndices = [], computerOpponentLevel = 'easy') {
+    constructor(players, computerOpponentLevels = []) {
         this.players = players;
         this.numberOfPlayers = players.length;
-        this.computerOpponentIndices = computerOpponentIndices; // which of the indices of players are robots
         this.currentPlayerIndex = 0;
         this.currentPossibleMoves = [];
         this.lastRolledValue = 0;
@@ -60,8 +57,11 @@ class Game {
 
         // create computer components
         this.computerOpponents = {};
-        for (let index of this.computerOpponentIndices) {
-            this.computerOpponents[index] = new (computerOpponentLevel === 'hard' ? MonteCarloOpponent : ComputerOpponent)(this, this.players[index]);
+        this.computerOpponentIndices = []; // which of the indices of players are robots
+        for (let i = 0; i < computerOpponentLevels.length; i++) {
+            const index = i + this.numberOfPlayers - computerOpponentLevels.length;
+            this.computerOpponentIndices.push(index);
+            this.computerOpponents[index] = new (computerOpponentLevels[i] === 'Hard' ? MonteCarloOpponent : ComputerOpponent)(this, this.players[index]);
         }
     }
 
@@ -347,16 +347,10 @@ window.addEventListener('keypress', event => {
     }
 });
 
-function setPlayers(players, computerOpponentIndices, computerOpponentLevel) {
-    game = new Game(players, computerOpponentIndices, computerOpponentLevel);
+function setPlayers(players, computerOpponentLevels) {
+    game = new Game(players, computerOpponentLevels);
 
-    popup.style.display = 'none';
-    main.style.opacity = 1;
-
-    side.style.translate = '0';
-
-    h1.style.left = '10rem';
-    h1.style.fontSize = '2rem';
+    hideSetupPage();
 
     viewPoints['blue'].setAttribute('set_bind', 'true');
 }
