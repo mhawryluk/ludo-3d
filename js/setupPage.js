@@ -7,6 +7,11 @@ const playButton = document.querySelector('.play');
 
 const opponentsContainer = document.querySelector('.opponents-container');
 
+function toggleInstructionPopup() {
+    const instructionPopup = document.getElementById('instructionPopup');
+    instructionPopup.classList.toggle('show-instruction');
+}
+
 let playersNumber = 4;
 
 document.getElementById('players-2').addEventListener('change', () => {

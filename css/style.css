@@ -318,3 +318,32 @@ side {
 .green .dot {
     background-color: var(--green-text);
 }
+
+.instruction-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 10px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.instruction-popup {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 0.5rem;
+    background-color: #f9f9f9;
+    padding: 15px;
+    z-index: 1;
+}
+
+.instruction-popup p {
+    font-size: 20px;
+}
+
+.show-instruction {
+    display: block;
+}
