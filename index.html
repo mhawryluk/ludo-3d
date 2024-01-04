@@ -3,15 +3,16 @@
 <head>
     <title>Ludo 3D</title>
     <script type='text/javascript' src='https://www.x3dom.org/download/x3dom.js' defer> </script>
-    <script type='text/javascript' src='./utils.js' defer> </script>
-    <script type='text/javascript' src='./constants.js' defer> </script>
-    <script type='text/javascript' src='./initTiles.js' defer> </script>
-    <script type='text/javascript' src='./game.js' defer> </script>
-    <script type='text/javascript' src='./computerOpponents.js' defer> </script>
-    <script type='text/javascript' src='./dice.js' defer> </script>
+    <script type='text/javascript' src='./js/utils.js' defer> </script>
+    <script type='text/javascript' src='./js/constants.js' defer> </script>
+    <script type='text/javascript' src='./js/initTiles.js' defer> </script>
+    <script type='text/javascript' src='./js/game.js' defer> </script>
+    <script type='text/javascript' src='./js/computerOpponents.js' defer> </script>
+    <script type='text/javascript' src='./js/dice.js' defer> </script>
+    <script type='text/javascript' src='./js/setupPage.js' defer> </script>
     <link rel='stylesheet' type='text/css' href='https://www.x3dom.org/download/x3dom.css'>
-    <link rel='stylesheet' type='text/css' href='./style.css'>
-    <link rel='stylesheet' type='text/css' href='./dice.css'>
+    <link rel='stylesheet' type='text/css' href='./css/style.css'>
+    <link rel='stylesheet' type='text/css' href='./css/dice.css'>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -75,77 +76,77 @@
 
                 <!-- table -->
                 <transform translation="7 -2 7">
-                    <inline url='./Textures/table.x3d'></inline>
+                    <inline url='./models/table.x3d'></inline>
                 </transform>
 
                 <!-- blue tokens -->
                 <transform id='blue-token-1' translation="3 1 3" visible="false">
-                    <inline nameSpaceName="blue-token-1" mapDEFToID="true" url='./Pawns/BluePawn.x3d'></inline>
+                    <inline nameSpaceName="blue-token-1" mapDEFToID="true" url='./models/BluePawn.x3d'></inline>
                 </transform>
 
                 <transform id='blue-token-2' translation="2 1 2" visible="false">
-                    <inline nameSpaceName="blue-token-2" mapDEFToID="true" url='./Pawns/BluePawn.x3d'></inline>
+                    <inline nameSpaceName="blue-token-2" mapDEFToID="true" url='./models/BluePawn.x3d'></inline>
                 </transform>
 
                 <transform id='blue-token-3' translation="2 1 3" visible="false">
-                    <inline nameSpaceName="blue-token-3" mapDEFToID="true" url='./Pawns/BluePawn.x3d'></inline>
+                    <inline nameSpaceName="blue-token-3" mapDEFToID="true" url='./models/BluePawn.x3d'></inline>
                 </transform>
 
                 <transform id='blue-token-4' translation="3 1 2" visible="false">
-                    <inline nameSpaceName="blue-token-4" mapDEFToID="true" url='./Pawns/BluePawn.x3d'></inline>
+                    <inline nameSpaceName="blue-token-4" mapDEFToID="true" url='./models/BluePawn.x3d'></inline>
                 </transform>
 
                 <!-- red tokens -->
                 <transform id='red-token-1' translation="3 1 11" visible="false">
-                    <inline nameSpaceName="red-token-1" mapDEFToID="true" url='./Pawns/RedPawn.x3d'></inline>
+                    <inline nameSpaceName="red-token-1" mapDEFToID="true" url='./models/RedPawn.x3d'></inline>
                 </transform>
 
                 <transform id='red-token-2' translation="2 1 12" visible="false">
-                    <inline nameSpaceName="red-token-2" mapDEFToID="true" url='./Pawns/RedPawn.x3d'></inline>
+                    <inline nameSpaceName="red-token-2" mapDEFToID="true" url='./models/RedPawn.x3d'></inline>
                 </transform>
 
                 <transform id='red-token-3' translation="2 1 11" visible="false">
-                    <inline nameSpaceName="red-token-3" mapDEFToID="true" url='./Pawns/RedPawn.x3d'></inline>
+                    <inline nameSpaceName="red-token-3" mapDEFToID="true" url='./models/RedPawn.x3d'></inline>
                 </transform>
 
                 <transform id='red-token-4' translation="3 1 12" visible="false">
-                    <inline nameSpaceName="red-token-4" mapDEFToID="true" url='./Pawns/RedPawn.x3d'></inline>
+                    <inline nameSpaceName="red-token-4" mapDEFToID="true" url='./models/RedPawn.x3d'></inline>
                 </transform>
 
 
                 <!-- yellow tokens -->
                 <transform id='yellow-token-1' translation="11 1 3" visible="false">
-                    <inline nameSpaceName="yellow-token-1" mapDEFToID="true" url='./Pawns/YellowPawn.x3d'></inline>
+                    <inline nameSpaceName="yellow-token-1" mapDEFToID="true" url='./models/YellowPawn.x3d'></inline>
                 </transform>
 
                 <transform id='yellow-token-2' translation="12 1 2" visible="false">
-                    <inline nameSpaceName="yellow-token-2" mapDEFToID="true" url='./Pawns/YellowPawn.x3d'></inline>
+                    <inline nameSpaceName="yellow-token-2" mapDEFToID="true" url='./models/YellowPawn.x3d'></inline>
                 </transform>
 
                 <transform id='yellow-token-3' translation="12 1 3" visible="false">
-                    <inline nameSpaceName="yellow-token-3" mapDEFToID="true" url='./Pawns/YellowPawn.x3d'></inline>
+                    <inline nameSpaceName="yellow-token-3" mapDEFToID="true" url='./models/YellowPawn.x3d'></inline>
                 </transform>
 
                 <transform id='yellow-token-4' translation="11 1 2" visible="false">
-                    <inline nameSpaceName="yellow-token-4" mapDEFToID="true" url='./Pawns/YellowPawn.x3d'></inline>
+                    <inline nameSpaceName="yellow-token-4" mapDEFToID="true" url='./models/YellowPawn.x3d'></inline>
                 </transform>
 
 
                 <!-- green tokens -->
                 <transform id='green-token-1' translation="11 1 11" visible="false">
-                    <inline nameSpaceName="green-token-1" mapDEFToID="true" url='./Pawns/GreenPawn.x3d'></inline>
+                    <inline nameSpaceName="green-token-1" mapDEFToID="true" url='./models/GreenPawn.x3d'></inline>
                 </transform>
 
                 <transform id='green-token-2' translation="12 1 12" visible="false">
-                    <inline nameSpaceName="green-token-2" mapDEFToID="true" url='./Pawns/GreenPawn.x3d'></inline>
+                    <inline nameSpaceName="green-token-2" mapDEFToID="true" url='./models/GreenPawn.x3d'></inline>
                 </transform>
 
                 <transform id='green-token-3' translation="12 1 11" visible="false">
-                    <inline nameSpaceName="green-token-3" mapDEFToID="true" url='./Pawns/GreenPawn.x3d'></inline>
+                    <inline nameSpaceName="green-token-3" mapDEFToID="true" url='./models/GreenPawn.x3d'></inline>
                 </transform>
 
                 <transform id='green-token-4' translation="11 1 12" visible="false">
-                    <inline nameSpaceName="green-token-4" mapDEFToID="true" url='./Pawns/GreenPawn.x3d'></inline>
+                    <inline nameSpaceName="green-token-4" mapDEFToID="true" url='./models/GreenPawn.x3d'></inline>
                 </transform>
             </scene>
         </x3d>
@@ -218,7 +219,7 @@
 
     <div class="dot-bg"></div>
 
-    <script type='text/javascript' src='./tileGenerator.js'> </script>
+    <script type='text/javascript' src='./js/tileGenerator.js'> </script>
 </body>
 
 </html>
