@@ -288,6 +288,14 @@ side {
     border-radius: 50%;
 }
 
+.scoreboard .dot[data-ai='true'] {
+    background-image: url(../assets/robot-icon.svg);
+    background-blend-mode: overlay;
+    background-size: 1.4rem;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 .scoreboard>div {
     display: flex;
     justify-content: center;
