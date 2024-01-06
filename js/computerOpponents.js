@@ -1,7 +1,8 @@
 class ComputerOpponent {
-    constructor(game, player) {
+    constructor(game, player, playerIndex) {
         this.game = game;
         this.player = player;
+        this.playerIndex = playerIndex;
     }
 
     makeMove() {
@@ -36,8 +37,8 @@ class MonteCarloOpponent extends ComputerOpponent {
     RANDOM_GAMES_PER_MOVE = 20;
     MOVES_PER_GAME = 20;
 
-    constructor(game, player) {
-        super(game, player);
+    constructor(game, player, playerIndex) {
+        super(game, player, playerIndex);
 
         this.positions = copyArray(game.tokenPositons);
     }
@@ -65,22 +66,104 @@ class MonteCarloOpponent extends ComputerOpponent {
 
             let scoreSum = 0;
             for (let i = 0; i < this.RANDOM_GAMES_PER_MOVE; i++) {
-                scoreSum += this.randomGame(copyArray(this.positions), move);
+                scoreSum += this.randomGame(this.player, this.playerIndex, copyArray(this.positions), move, this.game.lastRolledValue, 0);
             }
 
             scores.push([scoreSum, move]);
         }
 
-        scores.sort((a, b) => a[0] - b[0]);
+        scores.sort((a, b) => b[0] - a[0]);
+        console.log('scores: ', scores);
         return scores[0][1];
     }
 
-    randomGame(positions, firstMove) {
+    randomGame(player, playerIndex, positions, move, rolledValue, depth) {
+        if (depth >= this.MOVES_PER_GAME) return 0;
+
         let score = 0;
 
-        // TODO: implement random game simulation and scoring
+        if (move) {
+            positions[player][move] += rolledValue;
+            const newTile = playerPaths[player][positions[player][move]];
 
-        return score;
+            // update score
+
+            // reaching safe spot
+            if (safeTiles.findIndex(safeTile => arraysEqual(safeTile, newTile)) !== -1) {
+                if (player === this.player) {
+                    score = 10;
+                }
+            } else {
+                // sending opponent home
+                for (let otherPlayer of this.game.players) {
+                    if (otherPlayer === player) continue;
+
+                    const otherTilesFoundIndices = [];
+                    for (let i = 0; i < 4; i++) {
+                        const otherTokenTile = playerPaths[otherPlayer][positions[otherPlayer][i]];
+                        if (arraysEqual(otherTokenTile, newTile)) {
+                            otherTilesFoundIndices.push(i);
+                        }
+                    }
+
+                    if (otherTilesFoundIndices.length === 1) {
+                        if (player === this.player) {
+                            score += 100;
+                        } else {
+                            score -= 100;
+                        }
+                    }
+                }
+            }
+        }
+
+        const nextPlayerIndex = rolledValue === 6 ? playerIndex : (playerIndex + 1) % this.game.numberOfPlayers;
+        const nextPlayer = game.players[nextPlayerIndex];
+        const nextRolledValue = Math.floor(Math.random() * 6) + 1;
+
+        const possibleMoves = [];
+        for (let i = 0; i < 4; i++) {
+            const position = positions[nextPlayer][i];
+            const newPosition = position + this.lastRolledValue;
+
+            if (newPosition >= 0 && newPosition < playerPaths[nextPlayer].length) {
+                possibleMoves.push(i);
+            }
+        }
+
+        // if sends home, do it, else random
+
+        let chosenMove = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
+
+        for (let move of possibleMoves) {
+            const newPosition = positions[nextPlayer][move] + nextRolledValue;
+            const newTile = playerPaths[player][newPosition];
+
+            if (safeTiles.findIndex(safeTile => arraysEqual(safeTile, newTile)) !== -1) {
+                if (player === this.player) {
+                    score = 10;
+                }
+            } else {
+                for (let otherPlayer of this.game.players) {
+                    if (otherPlayer === nextPlayer) continue;
+
+                    const otherTilesFoundIndices = [];
+                    for (let i = 0; i < 4; i++) {
+                        const otherTokenTile = playerPaths[otherPlayer][positions[otherPlayer][i]];
+                        if (arraysEqual(otherTokenTile, newTile)) {
+                            otherTilesFoundIndices.push(i);
+                        }
+                    }
+
+                    if (otherTilesFoundIndices.length === 1) {
+                        chosenMove = move;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return score + this.randomGame(nextPlayer, nextPlayerIndex, positions, chosenMove, nextRolledValue, depth + 1);
     }
 }
 

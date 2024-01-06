@@ -61,7 +61,7 @@ class Game {
         for (let i = 0; i < computerOpponentLevels.length; i++) {
             const index = i + this.numberOfPlayers - computerOpponentLevels.length;
             this.computerOpponentIndices.push(index);
-            this.computerOpponents[index] = new (computerOpponentLevels[i] === 'Hard' ? MonteCarloOpponent : ComputerOpponent)(this, this.players[index]);
+            this.computerOpponents[index] = new (computerOpponentLevels[i] === 'Hard' ? MonteCarloOpponent : ComputerOpponent)(this, this.players[index], index);
             document.querySelector(`.scoreboard > .${this.players[index]} .dot`).dataset.ai = 'true';
         }
     }
