@@ -77,18 +77,23 @@
 
         <button class="instruction-button" onclick="toggleInstructionPopup()">
             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" style="fill:#71a5de">
-                <path d="M0 0h24v24H0V0zm2 17h2v2H2zm0-4h2v2H2zm0-4h2v2H2zm0-4h2v2H2zm4 12h14v-2H6zm0-4h14v-2H6zm0-4h14V3H6z"/>
+                <path
+                    d="M0 0h24v24H0V0zm2 17h2v2H2zm0-4h2v2H2zm0-4h2v2H2zm0-4h2v2H2zm4 12h14v-2H6zm0-4h14v-2H6zm0-4h14V3H6z" />
             </svg>
         </button>
-    
+
         <div class="instruction-popup" id="instructionPopup">
-            <p>In the first step, you choose the number of players and decide how many opponents will be controlled by the computer. 
-                Next, a game of Ludo will be played. The first move can be made after rolling a six. The player who gets all their tokens to the central area first wins. 
-                If a player lands on the same space as an opponent, it sends the opponent's token back to the starting area. 
+            <p>In the first step, you choose the number of players and decide how many opponents will be controlled by
+                the computer.
+                Next, a game of Ludo will be played. The first move can be made after rolling a six. The player who gets
+                all their tokens to the central area first wins.
+                If a player lands on the same space as an opponent, it sends the opponent's token back to the starting
+                area.
                 There are "safe spaces" on the starting point and on colored squares on the board.</p>
             <button onclick="toggleInstructionPopup()">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill:#71a5de">
-                    <path d="M19 6.41l-1.41-1.41L12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/>
+                    <path
+                        d="M19 6.41l-1.41-1.41L12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" />
                 </svg>
             </button>
         </div>
@@ -99,6 +104,9 @@
         <x3d width='950px' height='800px'>
             <scene>
                 <NavigationInfo type='"examine" "any"' headlight="false" reverseScroll='true'></NavigationInfo>
+
+                <ImageTexture DEF='WOOD' url='"./assets/white-wooden-floor.jpg"'>
+                </imagetexture>
 
                 <!-- viewpoints -->
                 <Viewpoint def='far-viewpoint' class='far-viewpoint' position="-45.45171 21.80305 17.91539"

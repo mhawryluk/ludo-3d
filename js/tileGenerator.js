@@ -10,6 +10,7 @@ for (let row = 0; row < 15; row++) {
         <shape>
             <appearance>
                 <material id="tile-${row}-${col}" diffuseColor='0.8 0.8 0.8'></material>
+                <ImageTexture USE='WOOD'></imagetexture>
             </appearance>
             <box height="50px" size="1 1 1"></box>
         </shape>
