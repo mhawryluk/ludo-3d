@@ -12,7 +12,7 @@ let game;
 
 class Game {
 
-    constructor(players, computerOpponentLevels = []) {
+    constructor(players, computerOpponentLevels = [], tokenPositons = undefined) {
         this.players = players;
         this.numberOfPlayers = players.length;
         this.currentPlayerIndex = 0;
@@ -20,8 +20,12 @@ class Game {
         this.lastRolledValue = 0;
 
         this.tokenPositons = {};
-        for (let player of this.players) {
-            this.tokenPositons[player] = [-6, -6, -6, -6];
+        if (tokenPositons === undefined) {
+            for (let player of this.players) {
+                this.tokenPositons[player] = [-6, -6, -6, -6];
+            }
+        } else {
+            this.tokenPositons = tokenPositons;
         }
 
         // get references to tokens and set their callbacks
@@ -38,7 +42,14 @@ class Game {
                 });
 
                 const startPosition = startPositions[player][i];
-                token.setAttribute('translation', `${startPosition[1]} 1 ${startPosition[0]}`);
+                const position = this.tokenPositons[player][i];
+                if (position === -6) {
+                    token.setAttribute('translation', `${startPosition[1]} 1 ${startPosition[0]}`);
+                } else {
+                    const tile = playerPaths[player][position];
+                    token.setAttribute('translation', `${tile[1]} 1 ${tile[0]}`);
+                    this.distributeTokensOnOneTile(tile);
+                }
             }
         }
 
@@ -241,7 +252,7 @@ class Game {
 
             this.resetRolledValue();
 
-        }, movesCount * 250);
+        }, movesCount * 250 + 50);
 
         this.clearPossibleMoves();
 
@@ -294,18 +305,24 @@ class Game {
             for (let i = 0; i < 4; i++) {
                 const tokenTile = playerPaths[player][this.tokenPositons[player][i]];
                 if (!tokenTile) continue;
-                if (arraysEqual(tokenTile, tile)) allTokensOnTile.push(tokens[player][i]);
+                if (arraysEqual(tokenTile, tile)) {
+                    allTokensOnTile.push(tokens[player][i]);
+                }
             }
         }
 
         const tokenCount = allTokensOnTile.length;
         const r = 0.35;
 
-        for (let i = 0; i < tokenCount; i++) {
-            const xOffset = tokenCount == 1 ? 0 : r * Math.cos(Math.PI / 180 * i * (360 / tokenCount));
-            const yOffset = tokenCount == 1 ? 0 : r * Math.sin(Math.PI / 180 * i * (360 / tokenCount));
+        console.log(allTokensOnTile);
 
-            allTokensOnTile[i].setAttribute('translation', `${tile[1] + yOffset} 1 ${tile[0] + xOffset}`);
+        for (let i = 0; i < tokenCount; i++) {
+            if (allTokensOnTile[i]) {
+                const xOffset = tokenCount == 1 ? 0 : r * Math.cos(Math.PI / 180 * i * (360 / tokenCount));
+                const yOffset = tokenCount == 1 ? 0 : r * Math.sin(Math.PI / 180 * i * (360 / tokenCount));
+
+                allTokensOnTile[i].setAttribute('translation', `${tile[1] + yOffset} 1 ${tile[0] + xOffset}`);
+            }
         }
     }
 
@@ -349,7 +366,12 @@ window.addEventListener('keypress', event => {
 });
 
 function setPlayers(players, computerOpponentLevels) {
-    game = new Game(players, computerOpponentLevels);
+    game = new Game(players, computerOpponentLevels, {
+        red: [-6, -6, 5, 5],
+        yellow: [20, 20, 20, 20],
+        blue: [-6, 3, 3, 3],
+        green: [2, 3, 4, 54],
+    });
 
     hideSetupPage();
 

@@ -108,9 +108,9 @@ class MonteCarloOpponent extends ComputerOpponent {
 
                     if (otherTilesFoundIndices.length === 1) {
                         if (player === this.player) {
-                            score += 100;
+                            score += 100 * (this.MOVES_PER_GAME - depth);
                         } else {
-                            score -= 100;
+                            score -= 100 * (this.MOVES_PER_GAME - depth);
                         }
                     }
                 }
@@ -140,9 +140,7 @@ class MonteCarloOpponent extends ComputerOpponent {
             const newTile = playerPaths[player][newPosition];
 
             if (safeTiles.findIndex(safeTile => arraysEqual(safeTile, newTile)) !== -1) {
-                if (player === this.player) {
-                    score = 10;
-                }
+
             } else {
                 for (let otherPlayer of this.game.players) {
                     if (otherPlayer === nextPlayer) continue;
