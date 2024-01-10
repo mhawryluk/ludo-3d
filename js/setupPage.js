@@ -70,7 +70,6 @@ playButton.addEventListener('click', () => {
 function removeUnneededOpponents() {
     const opponentDivs = document.querySelectorAll('.opponent');
     for (let i = playersNumber - 1; i < opponentDivs.length; i++) {
-        console.log(i);
         const lastChild = opponentsContainer.lastElementChild;
         if (lastChild.classList.contains('opponent')) {
             opponentsContainer.removeChild(lastChild);

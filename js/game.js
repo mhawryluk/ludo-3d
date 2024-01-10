@@ -201,7 +201,7 @@ class Game {
                         timeSensor.setAttribute('cycleInterval', `2`);
                         timeSensor.setAttribute('starttime', time);
 
-                        // tokens[otherPlayer][otherTileIndex].setAttribute('translation', `${startPosition[1]} 1 ${startPosition[0]}`);
+                        tokens[otherPlayer][otherTileIndex].setAttribute('translation', `${startPosition[1]} 1 ${startPosition[0]}`);
 
                         this.updatePlayerScore(otherPlayer);
                     }, this.lastRolledValue * 500);
@@ -237,6 +237,7 @@ class Game {
         timeSensor.setAttribute('starttime', time);
 
         setTimeout(() => {
+            tokens[player][i].setAttribute('translation', `${newPosition[1]} 1 ${newPosition[0]}`);
             if (oldTile) this.distributeTokensOnOneTile(oldTile);
             this.distributeTokensOnOneTile(newTile);
 
@@ -314,8 +315,6 @@ class Game {
         const tokenCount = allTokensOnTile.length;
         const r = 0.35;
 
-        console.log(allTokensOnTile);
-
         for (let i = 0; i < tokenCount; i++) {
             if (allTokensOnTile[i]) {
                 const xOffset = tokenCount == 1 ? 0 : r * Math.cos(Math.PI / 180 * i * (360 / tokenCount));
@@ -367,18 +366,16 @@ window.addEventListener('keypress', event => {
 
 function setPlayers(players, computerOpponentLevels) {
     game = new Game(players, computerOpponentLevels, {
-        red: [-6, -6, 5, 5],
+        red: [-6, -6, -6, -6],
         yellow: [20, 20, 20, 20],
-        blue: [-6, 3, 3, 3],
-        green: [2, 3, 4, 54],
+        blue: [0, 1, 2, 3],
+        green: [31, 32, 33, 34],
     });
 
     hideSetupPage();
 
     viewPoints['blue'].setAttribute('set_bind', 'true');
 }
-
-
 
 const scoreDivs = {};
 const viewPoints = {};
