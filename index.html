@@ -76,20 +76,28 @@
         <button class="play">Play!</button>
 
         <button class="instruction-button" onclick="toggleInstructionPopup()">
-            <svg class="question-mark" xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" style="fill:#71a5de">
+            <svg class="question-mark" xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24"
+                style="fill:#71a5de">
                 <text x="80%" y="40%" dy=".3em" font-size="16" text-anchor="middle">?</text>
-            </svg>    
+            </svg>
         </button>
 
         <div class="instruction-popup" id="instructionPopup">
-            <p>In the first step, you choose the number of players and decide how many opponents will be controlled by the computer.</p>
-            <p>Next, a game of Ludo will be played. The first move can be made after rolling a six. The player who gets all their tokens to the central area first wins.</p>
-            <p>If a player lands on the same space as an opponent, it sends the opponent's token back to the starting area.</p>
+            <p>In the first step, you choose the number of players and decide how many opponents will be controlled by
+                the computer.</p>
+            <p>Next, a game of Ludo will be played. The first move can be made after rolling a six. After each rolling
+                of a six, you get an extra turn. The player who gets all their tokens to the central area first wins.
+            </p>
+            <p>If a player lands on the same space as an opponent, it sends the opponent's token back to the starting
+                area.</p>
             <p>There are "safe spaces" on the starting point and on colored squares on the board.</p>
-            <p>A 'safe space' is also created when two tokens of the same player occupy the same space simultaneously.</p>
+            <p>A "safe space" is also created when two tokens of the same player occupy the same space simultaneously.
+            </p>
             <button class="close-button" onclick="toggleInstructionPopup()">
-                <svg class="close-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill:#71a5de">
-                    <path d="M19 6.41l-1.41-1.41L12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/>
+                <svg class="close-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    style="fill:#71a5de">
+                    <path
+                        d="M19 6.41l-1.41-1.41L12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" />
                 </svg>
             </button>
         </div>

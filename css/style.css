@@ -338,35 +338,41 @@ side {
     position: absolute;
     top: 0;
     right: 0;
-    width: 50%;
-    height: auto; 
+    width: min(80%, 500px);
+    height: 100%;
     border-radius: 0.3rem;
     background-color: #f9f9f9;
-    padding: 15px;
+    color: var(--yellow-text);
+    padding: 2rem;
+    padding-right: 3rem;
     z-index: 1;
-    overflow: auto; 
+    overflow: auto;
+    gap: 1rem;
+    align-content: center;
 }
 
 
 .instruction-popup p {
-    font-size: 20px;
+    font-size: 1rem;
     text-align: left;
 }
 
-.close-button:hover .close-icon path{
-    fill: red;
+.close-button:hover .close-icon path {
+    fill: white;
 }
 
 .show-instruction {
-    display: block;
+    display: grid;
 }
 
 .close-button {
     position: absolute;
     top: 10px;
     right: 0px;
+    margin: 10px;
+    scale: 1.2;
     background-color: transparent;
     border: none;
     cursor: pointer;
+    fill: var(--blue-bg);
 }
-
