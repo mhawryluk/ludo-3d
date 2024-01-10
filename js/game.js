@@ -188,7 +188,7 @@ class Game {
                     const startPosition = this.getFreeStartPosition(otherPlayer);
 
                     setTimeout(() => {
-                        let keyValue = `${newTile[1]} 1 ${oldTile[0]}  ${newTile[1]} 5 ${oldTile[0]}  ${startPosition[1]} 1 ${startPosition[0]}`;
+                        let keyValue = `${newTile[1]} 1 ${newTile[0]}  ${newTile[1]} 5 ${newTile[0]}  ${startPosition[1]} 1 ${startPosition[0]}`;
                         let key = '0 0.2 1';
 
                         const timeSensor = document.getElementById(`time-${otherPlayer}-${otherTileIndex + 1}`);
