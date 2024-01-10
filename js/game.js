@@ -75,6 +75,10 @@ class Game {
             this.computerOpponents[index] = new (computerOpponentLevels[i] === 'Hard' ? MonteCarloOpponent : ComputerOpponent)(this, this.players[index], index);
             document.querySelector(`.scoreboard > .${this.players[index]} .dot`).dataset.ai = 'true';
         }
+
+        for (let player of this.players) {
+            this.updatePlayerScore(player);
+        }
     }
 
     /**
