@@ -311,7 +311,9 @@ class Game {
                 const tokenTile = playerPaths[player][this.tokenPositons[player][i]];
                 if (!tokenTile) continue;
                 if (arraysEqual(tokenTile, tile)) {
-                    allTokensOnTile.push(tokens[player][i]);
+                    if (tokens[player]) {
+                        allTokensOnTile.push(tokens[player][i]);
+                    }
                 }
             }
         }
@@ -370,10 +372,15 @@ window.addEventListener('keypress', event => {
 
 function setPlayers(players, computerOpponentLevels) {
     game = new Game(players, computerOpponentLevels, {
+        // red: [-6, -6, -6, -6],
+        // yellow: [20, 20, 20, 20],
+        // blue: [0, 1, 2, 3],
+        // green: [31, 32, 33, 34],
+
         red: [-6, -6, -6, -6],
-        yellow: [20, 20, 20, 20],
-        blue: [0, 1, 2, 3],
-        green: [31, 32, 33, 34],
+        yellow: [-6, -6, -6, -6],
+        blue: [-6, -6, -6, -6],
+        green: [-6, -6, -6, -6],
     });
 
     hideSetupPage();
